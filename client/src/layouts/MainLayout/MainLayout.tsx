@@ -1,8 +1,9 @@
+import { Typography } from '@mui/material'
 import React from 'react'
 
 const MainLayout = () => {
   return (
-    <div>MainLayout</div>
+    <Typography>MainLayout</Typography>
   )
 }
 

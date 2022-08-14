@@ -1,9 +1,10 @@
-import React from 'react'
+import { useRoutes } from "react-router-dom"
+import protectedRoutes from "./protectedRoute"
+import publicRoutes from "./publicRoutes"
+import unmatchedRoute from "./unmatchectRoute"
 
 const Routes = () => {
-  return (
-    <div>Routes</div>
-  )
+    return useRoutes([publicRoutes, protectedRoutes, unmatchedRoute])
 }
 
 export default Routes

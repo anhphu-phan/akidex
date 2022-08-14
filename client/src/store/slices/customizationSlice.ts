@@ -1,10 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "store";
 
-const localStoreKey = 'theme'
-const persistedTheme = localStorage.getItem(localStoreKey) || 'light'
+type ColorScheme = 'light' | 'dark'
+
+const localStoreKey = 'colorScheme'
+const colorScheme: ColorScheme  = (localStorage.getItem(localStoreKey) || 'light') as ColorScheme
 
 const initialState = {
-    theme: persistedTheme
+    colorScheme
 }
 
 const customizationSlice = createSlice({
@@ -14,6 +17,9 @@ const customizationSlice = createSlice({
 
     }
 })
+
+// ============================== Selectors ==============================
+export const selectColorScheme = (state: RootState) => state.customization.colorScheme
 
 
 export const {} = customizationSlice.actions
