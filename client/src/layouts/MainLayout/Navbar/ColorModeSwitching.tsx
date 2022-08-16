@@ -1,7 +1,7 @@
 import React from "react"
 import { IconButton, SxProps, Theme } from "@mui/material"
 import LightModeIcon from "@mui/icons-material/LightMode"
-import BedtimeOutlinedIcon from "@mui/icons-material/BedtimeOutlined"
+import BedtimeIcon from '@mui/icons-material/Bedtime';
 import { useAppDispatch, useAppSelector } from "store/hooks"
 import { selectColorScheme, toggleMode } from "store/slices/customizationSlice"
 
@@ -19,7 +19,7 @@ const ColorModeSwitching = ({ sx }: ColorModeSwitchingProps) => {
 
     return (
         <IconButton sx={{ p: 0.5, color: "#fff", border: "1px solid #E0E3E7", ...sx }} onClick={handleToggleColorMode}>
-            {colorMode === "light" ? <BedtimeOutlinedIcon /> : <LightModeIcon />}
+            {colorMode === "light" ? <BedtimeIcon /> : <LightModeIcon color='warning' />}
         </IconButton>
     )
 }

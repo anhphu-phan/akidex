@@ -3,6 +3,7 @@
 import React, { useRef, useState } from "react"
 import { Page } from "CONSTANTS"
 import {
+    Box,
     Button as MuiButton,
     Menu as MuiMenu,
     MenuItem,
@@ -13,12 +14,12 @@ import {
     menuClasses,
     styled,
     popoverClasses,
+    ClickAwayListener,
 } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import ExpandLessIcon from "@mui/icons-material/ExpandLess"
 import { Link } from "react-router-dom"
 import { Theme } from "@mui/material"
-import { TransitionGroup } from "react-transition-group"
 
 interface NavigationItemProps {
     item: Page
@@ -35,6 +36,7 @@ const Menu = styled(MuiMenu, {
     fontFamily: "inherit",
     color: "inherit",
     transform: "translateX(-0.5rem)",
+    pointerEvents: 'none',
     [`&& .${menuItemClasses.root}:hover`]: {
         backgroundColor: theme.palette.mode === "dark" ? theme.palette.primaryDark[700] : theme.palette.primary[600],
     },
@@ -54,6 +56,9 @@ const Menu = styled(MuiMenu, {
     [`& .${popoverClasses.root}`]: {
         pointerEvents: "none !important",
     },
+    [`& .MuiMenu-list`]: {
+        pointerEvents: 'auto'
+    }
 }))
 
 const Button = styled(MuiButton)(() => ({
@@ -72,9 +77,11 @@ const NavigationItem = ({ item, sx }: NavigationItemProps) => {
     const menuRef = useRef<HTMLDivElement>(document.createElement("div"))
     const open = Boolean(anchorEl)
 
-    const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
+    const handleToggle = (event: React.MouseEvent<HTMLElement>) => {
         if (anchorEl !== event.currentTarget) {
             setAnchorEl(event.currentTarget)
+        } else {
+            setAnchorEl(null)
         }
     }
 
@@ -83,51 +90,54 @@ const NavigationItem = ({ item, sx }: NavigationItemProps) => {
     }
 
     return (
-        <>
-            <Button
-                endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                onClick={handleOpen}
-                sx={{
-                    ...sx,
-                }}
-            >
-                {item.name}
-            </Button>
-            <Menu
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left",
-                }}
-                transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                }}
-                PaperProps={{
-                    ref: menuRef,
-                }}
-                TransitionComponent={Collapse}
-                paperHeight={menuRef.current.scrollHeight}
-                disableAutoFocusItem
-                disablePortal
-                keepMounted
-                open={open}
-                onClose={handleClose}
-            >
-                {item.children &&
-                    item.children.map((childItem) => (
-                        <MenuItem
-                            key={childItem.url}
-                            component={Link}
-                            to={childItem.url}
-                            onClick={handleClose}
-                            sx={{ fontFamily: "inherit", color: "inherit" }}
-                        >
-                            <Typography fontFamily="inherit">{childItem.name}</Typography>
-                        </MenuItem>
-                    ))}
-            </Menu>
-        </>
+        <ClickAwayListener onClickAway={handleClose}>
+            <Box>
+                <Button
+                    endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                    onClick={handleToggle}
+                    sx={{
+                        ...sx,
+                    }}
+                >
+                    {item.name}
+                </Button>
+                <Menu
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "left",
+                    }}
+                    transformOrigin={{
+                        vertical: "top",
+                        horizontal: "left",
+                    }}
+                    PaperProps={{
+                        ref: menuRef,
+                    }}
+                    TransitionComponent={Collapse}
+                    paperHeight={menuRef.current.scrollHeight}
+                    disableAutoFocusItem
+                    disablePortal
+                    keepMounted
+                    hideBackdrop
+                    open={open}
+                    onClose={handleClose}
+                >
+                    {item.children &&
+                        item.children.map((childItem) => (
+                            <MenuItem
+                                key={childItem.url}
+                                component={Link}
+                                to={childItem.url}
+                                onClick={handleClose}
+                                sx={{py: 1.25, fontFamily: "inherit", color: "inherit" }}
+                            >
+                                <Typography fontFamily="inherit">{childItem.name}</Typography>
+                            </MenuItem>
+                        ))}
+                </Menu>
+            </Box>
+        </ClickAwayListener>
     )
 }
 
