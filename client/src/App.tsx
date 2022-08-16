@@ -1,19 +1,20 @@
 import React from "react"
-import { createTheme, CssBaseline, StyledEngineProvider, ThemeProvider } from "@mui/material"
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material"
+import StyledEngineProvider from "@mui/material/StyledEngineProvider"
 import { deepmerge } from "@mui/utils"
 import { Routes } from "routes"
 import { useAppSelector } from "store/hooks"
 import { selectColorScheme } from "store/slices/customizationSlice"
-import { getDesignTokens, getThemedComponents } from "themes"
+import { getBaseTheme, getThemedComponents } from "themes"
 
 function App() {
     const colorScheme = useAppSelector(selectColorScheme)
 
     const theme = React.useMemo(() => {
-        const designTokens = getDesignTokens(colorScheme)
-        let newTheme = createTheme(designTokens)
+        const baseTheme = getBaseTheme(colorScheme)
+        let newTheme = createTheme(baseTheme)
         newTheme = deepmerge(newTheme, getThemedComponents(newTheme))
-        
+
         return newTheme
     }, [colorScheme])
 

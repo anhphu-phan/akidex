@@ -22,7 +22,7 @@ const publicRoutes: RouteObject = {
                     element: <MangaHomePage />,
                 },
                 {
-                    path: "top",
+                    path: "ranking",
                     element: <TopManga />,
                 },
                 {
@@ -45,7 +45,7 @@ const publicRoutes: RouteObject = {
                     element: <AnimeHomePage />,
                 },
                 {
-                    path: "top",
+                    path: "ranking",
                     element: <TopAnime />,
                 },
                 {
@@ -68,7 +68,7 @@ const publicRoutes: RouteObject = {
                     element: <VisualNovelHomePage />,
                 },
                 {
-                    path: "top",
+                    path: "ranking",
                     element: <TopVisualNovel />,
                 },
                 {

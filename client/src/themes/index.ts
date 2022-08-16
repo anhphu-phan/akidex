@@ -1,6 +1,5 @@
 // theme reference: https://github.com/mui/material-ui/blob/v5.8.0/docs/src/modules/brandingTheme.ts
 
-import { deepmerge } from "@mui/utils"
 import ArrowDropDownRounded from "@mui/icons-material/ArrowDropDownRounded"
 import { createTheme, ThemeOptions, Theme, alpha } from "@mui/material/styles"
 
@@ -61,13 +60,47 @@ declare module "@mui/material/styles/createTypography" {
 // }
 
 // TODO: enable this once types conflict is fixed
-// declare module '@mui/material/Button' {
-//   interface ButtonPropsVariantOverrides {
-//     code: true;
-//   }
-// }
+declare module "@mui/material/Button" {
+    interface ButtonPropsVariantOverrides {
+        link: true
+    }
+}
 
 const defaultTheme = createTheme()
+
+const primary = {
+    50: "#edefff",
+    100: "#d2daf0",
+    200: "#b9c2db",
+    300: "#9fa9c7",
+    400: "#8b95b6",
+    500: "#7783a6",
+    600: "#677494",
+    700: "#55607d",
+    800: "#454d66",
+    900: "#31384d",
+    main: "#55607d",
+    dark: "#31384d",
+    light: "#7783a6",
+    contrastText: "#fff",
+}
+
+const secondary = {
+    50: "#e1f3ed",
+    100: "#b6e0d2",
+    200: "#89cdb6",
+    300: "#5eb89a",
+    400: "#42a986",
+    500: "#309974",
+    600: "#2b8c69",
+    700: "#267c5a",
+    800: "#1f6c4d",
+    900: "#135033",
+    main: "#309974",
+    dark: "#267c5a",
+    light: "#5eb89a",
+    contrastText: "#fff",
+}
 
 export const blue = {
     50: "#F0F7FF",
@@ -107,6 +140,11 @@ const grey = {
     800: "#2D3843", // vs white bg: WCAG 11.9 AAA, APCA 97.3 Best for text
     900: "#1A2027",
 }
+
+const navbar = {
+    main: "#1a3b4c",
+    light: "#0a6d92",
+}
 // context on the Advanced Perceptual Contrast Algorithm (APCA) used above here: https://github.com/w3c/wcag/issues/695
 
 const systemFont = [
@@ -122,32 +160,29 @@ const systemFont = [
     '"Segoe UI Symbol"',
 ]
 
-export const getMetaThemeColor = (mode: "light" | "dark") => {
-    const themeColor = {
-        light: grey[50],
-        dark: blueDark[800],
-    }
-    return themeColor[mode]
-}
-
-export const getDesignTokens = (mode: "light" | "dark") =>
+export const getBaseTheme = (mode: "light" | "dark") =>
     ({
         palette: {
-            primary: {
-                ...blue,
-                ...(mode === "dark" && {
-                    main: blue[400],
-                }),
-            },
+            // primary: {
+            //     // ...blue,
+            //     // ...(mode === "dark" && {
+            //     //     main: blue[400],
+            //     // }),
+
+            // },
+            primary,
             divider: mode === "dark" ? alpha(blue[100], 0.08) : grey[100],
             primaryDark: blueDark,
+            secondary,
             mode,
-            ...(mode === "dark" && {
-                background: {
+            background: {
+                default: "#edf1f5",
+                // paper: "#d3dde3",
+                ...(mode === "dark" && {
                     default: blueDark[800],
                     paper: blueDark[900],
-                },
-            }),
+                }),
+            },
             common: {
                 black: "#1D1D1D",
             },
@@ -208,13 +243,14 @@ export const getDesignTokens = (mode: "light" | "dark") =>
                 800: "#8C5800", // vs white bg: WCAG 5.9 AAA large, APCA 80 Best for text
                 900: "#5A3600", // vs white bg: WCAG 10.7 AAA, APCA 95 Best for text
             },
+            navbar: navbar,
         },
         shape: {
             borderRadius: 10,
         },
         spacing: 10,
         typography: {
-            fontFamily: ["Ralewray", '"Pocket Monk"', ...systemFont].join(","),
+            fontFamily: ["Raleway", ...systemFont].join(","),
             fontFamilyCode: ["Consolas", "Menlo", "Monaco", "Andale Mono", "Ubuntu Mono", "monospace"].join(","),
             fontFamilyTagline: ['"PlusJakartaSans-ExtraBold"', ...systemFont].join(","),
             fontFamilySystem: systemFont.join(","),
@@ -289,7 +325,7 @@ export const getDesignTokens = (mode: "light" | "dark") =>
                 fontWeight: 700,
             },
             logo: {
-                fontFamily: "Pocket Monk",
+                fontFamily: ["One Piece", ...systemFont].join(","),
                 fontWeight: 900,
                 fontSize: "3.3125rem",
                 lineHeight: "1.15em",
@@ -327,50 +363,6 @@ export function getThemedComponents(theme: Theme): { components: Theme["componen
                     },
                 },
                 variants: [
-                    {
-                        // @ts-ignore internal repo module augmentation issue
-                        props: { variant: "code" },
-                        style: {
-                            color: theme.palette.mode === "dark" ? theme.palette.grey[400] : theme.palette.grey[800],
-                            border: "1px solid",
-                            borderColor:
-                                theme.palette.mode === "dark"
-                                    ? theme.palette.primaryDark[400]
-                                    : theme.palette.grey[300],
-                            backgroundColor:
-                                theme.palette.mode === "dark" ? theme.palette.primaryDark[700] : theme.palette.grey[50],
-                            fontFamily: theme.typography.fontFamilyCode,
-                            fontWeight: 400,
-                            fontSize: defaultTheme.typography.pxToRem(13), // 14px
-                            lineHeight: 21 / 14,
-                            letterSpacing: 0,
-                            WebkitFontSmoothing: "subpixel-antialiased",
-                            "&:hover, &.Mui-focusVisible": {
-                                borderColor: theme.palette.primary.main,
-                                backgroundColor:
-                                    theme.palette.mode === "dark"
-                                        ? theme.palette.primaryDark[600]
-                                        : theme.palette.primary[50],
-                                "& .MuiButton-endIcon": {
-                                    color:
-                                        theme.palette.mode === "dark"
-                                            ? theme.palette.primary[300]
-                                            : theme.palette.primary.main,
-                                },
-                            },
-                            "& .MuiButton-startIcon": {
-                                color: theme.palette.grey[400],
-                            },
-                            "& .MuiButton-endIcon": {
-                                display: "inline-block",
-                                position: "absolute",
-                                right: 0,
-                                marginRight: 10,
-                                color:
-                                    theme.palette.mode === "dark" ? theme.palette.grey[400] : theme.palette.grey[700],
-                            },
-                        },
-                    },
                     {
                         // @ts-ignore internal repo module augmentation issue
                         props: { variant: "link" },
@@ -413,6 +405,19 @@ export function getThemedComponents(theme: Theme): { components: Theme["componen
                         },
                     },
                 ],
+            },
+            MuiAppBar: {
+                styleOverrides: {
+                    root: {
+                        height: 56,
+                        [theme.breakpoints.up("sm")]: {
+                            height: 64,
+                        },
+                        [theme.breakpoints.up("md")]: {
+                            height: 64,
+                        },
+                    },
+                },
             },
             MuiMenu: {
                 styleOverrides: {
@@ -465,8 +470,10 @@ export function getThemedComponents(theme: Theme): { components: Theme["componen
                         boxShadow: `0px 4px 20px ${
                             theme.palette.mode === "dark" ? "rgba(0, 0, 0, 0.5)" : "rgba(170, 180, 190, 0.3)"
                         }`,
-                    },
+                        borderRadius: 5,
+                    }
                 },
+                
             },
             MuiContainer: {
                 styleOverrides: {
@@ -790,6 +797,3 @@ export function getThemedComponents(theme: Theme): { components: Theme["componen
         },
     }
 }
-
-const dark_theme = createTheme(getDesignTokens("dark"))
-export const darkTheme = deepmerge(dark_theme, getThemedComponents(dark_theme))

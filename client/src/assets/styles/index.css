@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Overpass&display=swap');
+
 @font-face {
     font-family: "Pocket Monk";
-    src: url("assets/fonts/PocketMonk.ttf");
+    src: url("../fonts/PocketMonk.ttf");
+}
+
+@font-face {
+    font-family: "One Piece";
+    font-weight: 400;
+    src: url("../fonts/OnePiece.woff2") format('woff2');
 }

@@ -1,8 +1,9 @@
+import { Button, Link } from '@mui/material'
 import React from 'react'
 
 const LeftSidebar = () => {
   return (
-    <div>LeftSidebar</div>
+    <Link href='/eir'>Click Me</Link>
   )
 }
 
