@@ -1,0 +1,28 @@
+query Media($perPage: Int, $search: String) {
+    Page(perPage: $perPage) {
+        pageInfo {
+            total
+            perPage
+            currentPage
+            lastPage
+            hasNextPage
+        }
+        media(sort: POPULARITY, search: $search) {
+            id
+            title {
+              romaji
+            }
+            episodes
+            season
+            seasonYear
+            status
+            genres
+            coverImage {
+                extraLarge
+                large
+                medium
+                color
+            }
+        }
+    }
+}

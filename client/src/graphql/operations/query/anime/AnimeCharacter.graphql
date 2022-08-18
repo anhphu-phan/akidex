@@ -1,0 +1,12 @@
+query AnimeCharacter($perPage: Int) {
+    Page(perPage: $perPage) {
+        pageInfo {
+            currentPage
+            hasNextPage
+            lastPage
+            perPage
+            total
+            __typename
+        }
+    }
+}

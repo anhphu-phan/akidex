@@ -1,0 +1,20 @@
+overwrite: true
+schema: "https://graphql.anilist.co"
+documents: "src/graphql/operations/**/*.graphql"
+generates:
+  # src/types/index.ts:
+  #   - typescript
+  src/:
+    preset: near-operation-file
+    presetConfig:
+      baseTypesPath: types.ts
+      extension: .ts
+      folder: ../../../../api/hooks
+    plugins:
+          - typescript-operations
+          - typescript-react-query
+    config:
+      fetcher: graphql-request
+  src/graphql/schema/schema.json:
+    plugins:
+      - "introspection"

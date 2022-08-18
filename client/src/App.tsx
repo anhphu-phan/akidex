@@ -1,6 +1,7 @@
 import React from "react"
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material"
 import StyledEngineProvider from "@mui/material/StyledEngineProvider"
+import * as locales from '@mui/material/locale';
 import { deepmerge } from "@mui/utils"
 import { Routes } from "routes"
 import { useAppSelector } from "store/hooks"
@@ -12,7 +13,7 @@ function App() {
 
     const theme = React.useMemo(() => {
         const baseTheme = getBaseTheme(colorScheme)
-        let newTheme = createTheme(baseTheme)
+        let newTheme = createTheme(baseTheme, locales['viVN'])
         newTheme = deepmerge(newTheme, getThemedComponents(newTheme))
 
         return newTheme

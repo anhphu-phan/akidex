@@ -1,0 +1,25 @@
+query Animes($perPage: Int, $search: String) {
+    Page(perPage: $perPage) {
+        pageInfo {
+            total
+            perPage
+            currentPage
+            lastPage
+            hasNextPage
+        }
+        media(type: ANIME, sort: POPULARITY, search: $search) {
+            id
+            episodes
+            season
+            seasonYear
+            status
+            genres
+            coverImage {
+                extraLarge
+                large
+                medium
+                color
+            }
+        }
+    }
+}
