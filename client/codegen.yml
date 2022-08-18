@@ -15,6 +15,8 @@ generates:
           - typescript-react-query
     config:
       fetcher: graphql-request
+      # exposeQueryKeys: true
+      # exposeFetcher: true
   src/graphql/schema/schema.json:
     plugins:
       - "introspection"

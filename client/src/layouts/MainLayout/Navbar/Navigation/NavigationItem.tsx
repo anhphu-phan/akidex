@@ -37,9 +37,11 @@ const Menu = styled(MuiMenu, {
     color: "inherit",
     transform: "translateX(-0.5rem)",
     pointerEvents: 'none',
+
     [`&& .${menuItemClasses.root}:hover`]: {
         backgroundColor: theme.palette.mode === "dark" ? theme.palette.primaryDark[700] : theme.palette.primary[600],
     },
+
     [`& .${menuClasses.paper}`]: {
         overflowY: "hidden",
         backgroundColor: theme.palette.mode === "dark" ? theme.palette.primaryDark[900] : theme.palette.primary.main,
@@ -53,10 +55,12 @@ const Menu = styled(MuiMenu, {
             easing: theme.transitions.easing.easeOut,
         }),
     },
+
     [`& .${popoverClasses.root}`]: {
         pointerEvents: "none !important",
     },
-    [`& .MuiMenu-list`]: {
+
+    [`& .${menuClasses.list}`]: {
         pointerEvents: 'auto'
     }
 }))

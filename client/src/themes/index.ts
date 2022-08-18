@@ -476,14 +476,14 @@ export function getThemedComponents(theme: Theme): { components: Theme["componen
                 
             },
             MuiContainer: {
-                styleOverrides: {
-                    root: {
-                        [theme.breakpoints.up("md")]: {
-                            paddingLeft: theme.spacing(2),
-                            paddingRight: theme.spacing(2),
-                        },
-                    },
-                },
+                // styleOverrides: {
+                //     root: {
+                //         [theme.breakpoints.up("md")]: {
+                //             paddingLeft: theme.spacing(0.25),
+                //             paddingRight: theme.spacing(0.25),
+                //         },
+                //     },
+                // },
             },
             MuiDivider: {
                 styleOverrides: {

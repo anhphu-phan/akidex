@@ -7,6 +7,7 @@ import UserSettings from "./UserSettings/UserSettings"
 import ColorModeSwitching from "./ColorModeSwitching"
 import { useAppDispatch } from "store/hooks"
 import { updateNavbarHeight } from "store/slices/customizationSlice"
+import Search from "./Search"
 
 const Navbar = () => {
     const dispatch = useAppDispatch()
@@ -25,6 +26,7 @@ const Navbar = () => {
                 {/* Mobile Logo */}
                 <Logo sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }} />
                 <Navigation sx={{ ml: 2, fontFamily: "Overpass", display: { xs: "none", md: "flex" } }} />
+                <Search />
                 <ColorModeSwitching sx={{ mr: 2 }} />
                 {/* User Avatar */}
                 <UserSettings />
