@@ -2,6 +2,8 @@
 
 import ArrowDropDownRounded from "@mui/icons-material/ArrowDropDownRounded"
 import { createTheme, ThemeOptions, Theme, alpha } from "@mui/material/styles"
+import { green, lightBlue, lime, orange, purple } from "@mui/material/colors"
+import { MediaStatus, MediaType } from "types"
 
 declare module "@mui/material/styles/createPalette" {
     interface ColorRange {
@@ -21,6 +23,17 @@ declare module "@mui/material/styles/createPalette" {
 
     interface Palette {
         primaryDark: PaletteColor
+        mediaType: Record<MediaType, Palette['primary']>
+        mediaStatus: Record<MediaStatus, Palette['primary']>
+    }
+
+    interface PaletteOptions {
+        mediaType?: Record<MediaType, PaletteOptions['primary']>
+        mediaStatus?: Record<MediaStatus, PaletteOptions['primary']>
+    }
+
+    interface TypeBackground {
+        hover: React.CSSProperties
     }
 }
 
@@ -54,10 +67,6 @@ declare module "@mui/material/styles/createTypography" {
         fontFamilyCode: string
     }
 }
-
-// // Update the Typography's variant prop options
-
-// }
 
 // TODO: enable this once types conflict is fixed
 declare module "@mui/material/Button" {
@@ -145,6 +154,7 @@ const navbar = {
     main: "#1a3b4c",
     light: "#0a6d92",
 }
+
 // context on the Advanced Perceptual Contrast Algorithm (APCA) used above here: https://github.com/w3c/wcag/issues/695
 
 const systemFont = [
@@ -159,6 +169,53 @@ const systemFont = [
     '"Segoe UI Emoji"',
     '"Segoe UI Symbol"',
 ]
+
+const mediaType = {
+    MANGA: {
+        ...green,
+        main: green[500],
+        light: green[300],
+        dark: green[700],
+        contrastText: defaultTheme.palette.getContrastText(green[500]),
+    },
+    ANIME: {
+        ...blue,
+        main: blue[500],
+        light: blue[300],
+        dark: blue[700],
+        contrastText: defaultTheme.palette.getContrastText(blue[500]),
+    },
+    "VISUAL NOVEL": {
+        ...purple,
+        main: purple[500],
+        light: purple[300],
+        dark: purple[700],
+        contrastText: defaultTheme.palette.getContrastText(purple[500]),
+    },
+}
+
+const mediaStatus = {
+    RELEASING: {
+        ...green,
+        main: 500,
+    },
+    FINISHED: {
+        ...lightBlue,
+        main: lightBlue[500],
+    },
+    NOT_YET_RELEASED: {
+        ...lime,
+        main: lime[500],
+    },
+    CANCELLED: {
+        ...grey,
+        main: grey[500],
+    },
+    HIATUS: {
+        ...orange,
+        main: orange[500],
+    },
+}
 
 export const getBaseTheme = (mode: "light" | "dark") =>
     ({
@@ -175,12 +232,16 @@ export const getBaseTheme = (mode: "light" | "dark") =>
             primaryDark: blueDark,
             secondary,
             mode,
+            mediaType,
+            mediaStatus,
             background: {
                 default: "#edf1f5",
+                hover: primary[50],
                 // paper: "#d3dde3",
                 ...(mode === "dark" && {
                     default: blueDark[800],
                     paper: blueDark[900],
+                    hover: blueDark[700],
                 }),
             },
             common: {
@@ -471,9 +532,8 @@ export function getThemedComponents(theme: Theme): { components: Theme["componen
                             theme.palette.mode === "dark" ? "rgba(0, 0, 0, 0.5)" : "rgba(170, 180, 190, 0.3)"
                         }`,
                         borderRadius: 5,
-                    }
+                    },
                 },
-                
             },
             MuiContainer: {
                 // styleOverrides: {

@@ -1,23 +1,29 @@
-import { Box, Container, Typography } from '@mui/material'
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import { LeftSidebar } from './LeftSidebar'
-import { Navbar } from './Navbar'
-import { RightSidebar } from './RightSidebar'
+import { Box, Container, Unstable_Grid2 as Grid } from "@mui/material"
+import React from "react"
+import { Outlet } from "react-router-dom"
+import { LeftSidebar } from "./LeftSidebar"
+import { Navbar } from "./Navbar"
+import { RightSidebar } from "./RightSidebar"
 
 const MainLayout = () => {
-  return (
-    <Box>
-        <Navbar />
-        <Container maxWidth='xl' disableGutters>
-            <LeftSidebar />
-            <Box>
-                <Outlet />
-            </Box>
-            <RightSidebar />
-        </Container>
-    </Box>
-  )
+    return (
+        <Box>
+            <Navbar />
+            <Container maxWidth="xl" disableGutters>
+                <Grid container>
+                    <Grid xs={3} md={2.5}>
+                        <LeftSidebar />
+                    </Grid>
+                    <Grid xs={6} md={7}>
+                        <Outlet />
+                    </Grid>
+                    <Grid xs={3} md={2.5}>
+                        <RightSidebar />
+                    </Grid>
+                </Grid>
+            </Container>
+        </Box>
+    )
 }
 
 export default MainLayout

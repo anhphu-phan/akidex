@@ -20,6 +20,7 @@ const Logo = ({ sx }: LogoProps) => {
                 letterSpacing: ".1rem",
                 color: "inherit",
                 textDecoration: "none",
+                mx: { xs: "auto" },
                 ...sx,
             }}
         >

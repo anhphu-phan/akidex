@@ -39,7 +39,7 @@ const Menu = styled(MuiMenu, {
     pointerEvents: 'none',
 
     [`&& .${menuItemClasses.root}:hover`]: {
-        backgroundColor: theme.palette.mode === "dark" ? theme.palette.primaryDark[700] : theme.palette.primary[600],
+        backgroundColor: theme.palette.mode === "dark" ? theme.palette.background.hover : theme.palette.primary[600],
     },
 
     [`& .${menuClasses.paper}`]: {
@@ -71,7 +71,7 @@ const Button = styled(MuiButton)(() => ({
     color: "white",
     display: "flex",
     alignItems: "center",
-    fontSize: "1.25rem",
+    fontSize: "1rem",
     fontFamily: "inherit",
     borderRadius: 0,
 }))

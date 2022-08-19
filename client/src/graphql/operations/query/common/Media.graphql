@@ -1,18 +1,16 @@
-query Media($perPage: Int, $search: String) {
+query Media($perPage: Int, $search: String, $type: MediaType) {
     Page(perPage: $perPage) {
-        pageInfo {
-            total
-            perPage
-            currentPage
-            lastPage
-            hasNextPage
-        }
-        media(sort: POPULARITY, search: $search) {
+        media(isAdult: false, type: $type, search: $search, sort: SEARCH_MATCH) {
             id
             title {
-              romaji
+                romaji
+                english
+                native
+                userPreferred
             }
+            type
             episodes
+            chapters
             season
             seasonYear
             status

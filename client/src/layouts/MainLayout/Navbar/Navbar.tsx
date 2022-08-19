@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef } from "react"
-import { AppBar, Toolbar } from "@mui/material"
+import { AppBar, Toolbar, Box } from "@mui/material"
 import Logo from "./Logo"
 import { Navigation } from "./Navigation"
 import { MobileNavigation } from "./MobileNavigation"
@@ -7,7 +7,7 @@ import UserSettings from "./UserSettings/UserSettings"
 import ColorModeSwitching from "./ColorModeSwitching"
 import { useAppDispatch } from "store/hooks"
 import { updateNavbarHeight } from "store/slices/customizationSlice"
-import Search from "./Search"
+import { Search } from "./Search"
 
 const Navbar = () => {
     const dispatch = useAppDispatch()
@@ -22,14 +22,18 @@ const Navbar = () => {
             <Toolbar>
                 <Logo sx={{ display: { xs: "none", md: "flex" } }} />
                 {/* Mobile homburger button */}
-                <MobileNavigation sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }} />
+                <MobileNavigation sx={{ flexGrow: 1, flexBasis: 0, display: { xs: "flex", md: "none" } }} />
                 {/* Mobile Logo */}
-                <Logo sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }} />
+                <Logo
+                    sx={{ flexGrow: 1, flexBasis: 0, justifyContent: "center", display: { xs: "flex", md: "none" } }}
+                />
                 <Navigation sx={{ ml: 2, fontFamily: "Overpass", display: { xs: "none", md: "flex" } }} />
-                <Search />
-                <ColorModeSwitching sx={{ mr: 2 }} />
-                {/* User Avatar */}
-                <UserSettings />
+                <Search sx={{ display: { xs: "none", md: "flex" } }} />
+                <Box sx={{ display: "flex", flexGrow: { xs: 1, md: 0 }, flexBasis: 0, justifyContent: "end" }}>
+                    <ColorModeSwitching sx={{ mr: 2 }} />
+                    {/* User Avatar */}
+                    <UserSettings />
+                </Box>
             </Toolbar>
         </AppBar>
     )

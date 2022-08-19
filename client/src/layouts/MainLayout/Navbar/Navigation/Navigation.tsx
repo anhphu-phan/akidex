@@ -9,7 +9,7 @@ interface NavigationProps {
 
 const Navigation = ({ sx }: NavigationProps) => {
     return (
-        <Box sx={{ height: "100%", bgcolor: "inherit", flexGrow: 1, gap: 1, ...sx }}>
+        <Box sx={{ height: "100%", bgcolor: "inherit", flexGrow: 0, gap: 1, ...sx }}>
             {pages.map((page) => (
                 <NavigationItem key={page.url} item={page} />
             ))}

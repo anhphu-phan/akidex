@@ -19,7 +19,7 @@ function App() {
     }, [colorScheme])
 
     console.log("🚀 ~ file: App.tsx ~ line 19 ~ theme ~ theme", theme)
-
+    
     return (
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>

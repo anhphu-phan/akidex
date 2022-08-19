@@ -1,5 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Overpass&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Overpass&display=swap");
+@import "react-perfect-scrollbar/dist/css/styles.css";
 
 @font-face {
     font-family: "Pocket Monk";
@@ -9,5 +10,10 @@
 @font-face {
     font-family: "One Piece";
     font-weight: 400;
-    src: url("../fonts/OnePiece.woff2") format('woff2');
+    src: url("../fonts/OnePiece.woff2") format("woff2");
+}
+
+html:focus-within,
+body {
+    scroll-behavior: smooth;
 }

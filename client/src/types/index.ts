@@ -2074,7 +2074,8 @@ export enum MediaType {
   /** Japanese Anime */
   Anime = 'ANIME',
   /** Asian comic */
-  Manga = 'MANGA'
+  Manga = 'MANGA',
+  VisualNovel='VISUAL NOVEL'
 }
 
 /** User message activity */
