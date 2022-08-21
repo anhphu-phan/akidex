@@ -10,7 +10,7 @@ declare global {
     }
 
     interface Error {
-        statusCode?: number
+        code?: number
     }
 }
 

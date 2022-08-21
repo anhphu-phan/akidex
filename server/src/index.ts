@@ -10,6 +10,7 @@ dotenv.config()
 // ======================== project imports ========================
 import errorHandler from 'middlewares/errorHandler'
 import { vndb } from 'utils/vndb-api'
+import { visualNovelRouter } from 'routes'
 
 // ======================== CONTANTS ============================
 const PORT = process.env.PORT || 8000
@@ -24,9 +25,10 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 // ======================== routes =========================
-app.use(errorHandler)
+app.use('/api/visual-novel', visualNovelRouter)
 
 // ======================== error handling ===========================
+app.use(errorHandler)
 
 // ======================== cleanup ==============================
 nodeCleanup(function (exitCode, signal) {

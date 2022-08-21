@@ -1,0 +1,1 @@
+export { default as visualNovelRouter } from './visualNovel'
