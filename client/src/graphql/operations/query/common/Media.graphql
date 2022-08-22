@@ -1,6 +1,6 @@
 query Media($perPage: Int, $search: String, $type: MediaType) {
     Page(perPage: $perPage) {
-        media(isAdult: false, type: $type, search: $search, sort: SEARCH_MATCH) {
+        media(type: $type, search: $search, sort: SEARCH_MATCH) {
             id
             title {
                 romaji
@@ -14,7 +14,7 @@ query Media($perPage: Int, $search: String, $type: MediaType) {
             season
             seasonYear
             status
-            genres
+            volumes
             coverImage {
                 extraLarge
                 large

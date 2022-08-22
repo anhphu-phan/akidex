@@ -1,4 +1,4 @@
-import React, { VoidFunctionComponent } from "react"
+import React, { Fragment, VoidFunctionComponent } from "react"
 import {
     Card,
     CardMedia,
@@ -9,34 +9,39 @@ import {
     CircularProgress,
     Typography,
 } from "@mui/material"
-import { ResultItemWrapper, Title, Info, MediaTypeName, MediaTypeCheckbox } from "./HelperComponents"
+import { ResultItemWrapper, Title, Info, MediaTypeName, MediaTypeCheckbox, DetailsSection } from "./HelperComponents"
 import { Link } from "react-router-dom"
 import { MediaQuery } from "api/hooks/Media"
 import { MediaType } from "types"
 import PerfectScrollbar from "react-perfect-scrollbar"
+import { VisualNovel } from "types/VisualNovels"
+import ResultItem, { Detail } from "./ResultItem"
+import { capitalize } from "utils"
+import ReactCountryFlag from "react-country-flag"
 
 interface ResultSectionPops {
     isLoading: boolean
-    data?: MediaQuery
+    animeMangaData?: MediaQuery
+    vnData: VisualNovel[] | undefined
     filters: Record<MediaType, boolean>
     onChecked: (type: MediaType, checked: boolean) => void
     closeMenu: () => void
 }
 
-const ResultSection = ({ data, isLoading, filters, onChecked, closeMenu }: ResultSectionPops) => {
+const ResultSection = ({ animeMangaData, vnData, isLoading, filters, onChecked, closeMenu }: ResultSectionPops) => {
     const handleChange = (type: MediaType) => (event: React.ChangeEvent<HTMLInputElement>) =>
         onChecked(type, event.currentTarget.checked)
 
     let content
 
-    if (isLoading || !data || !data.Page || !data.Page.media)
+    if (isLoading)
         content = (
             <Box sx={{ display: "flex", justifyContent: "center", py: 2 }}>
                 <CircularProgress />
             </Box>
         )
     // if user uncheck all the checkbox => found nothing
-    else if (Object.values(filters).every((checked) => !checked) || data.Page.media.length === 0)
+    else if (Object.values(filters).every((checked) => !checked) || animeMangaData?.Page?.media?.length === 0)
         content = <Typography>Found nothing.</Typography>
     else {
         content = (
@@ -48,45 +53,57 @@ const ResultSection = ({ data, isLoading, filters, onChecked, closeMenu }: Resul
                 }}
             >
                 <Box>
-                    {data &&
-                        data.Page &&
-                        data.Page.media &&
-                        data.Page.media.map((media) => {
-                            let mediaType
+                    {animeMangaData &&
+                        animeMangaData.Page &&
+                        animeMangaData.Page.media &&
+                        animeMangaData.Page.media.map((media) => {
+                            let details: Detail[] = []
                             if (media?.type === MediaType.Anime) {
-                                mediaType = "Anime"
+                                details = [
+                                    { title: "Episodes", content: media?.episodes?.toString() || "" },
+                                    { title: "Season", content: `${media?.season} ${media?.seasonYear?.toString()}` } ||
+                                        "",
+                                ]
                             } else if (media?.type === MediaType.Manga) {
-                                mediaType = "Manga"
-                            } else {
-                                mediaType = "Visual Novel"
+                                details = [
+                                    { title: "Chapters", content: media?.chapters?.toString() || "" },
+                                    { title: "Volumes", content: media?.volumes?.toString() || "" },
+                                ]
                             }
 
                             return (
-                                <ResultItemWrapper
-                                    component={Link}
+                                <ResultItem
                                     key={media?.id}
-                                    to={`${mediaType.toLowerCase().replace(" ", "-")}/${media?.id}`}
-                                    onClick={() => closeMenu()}
-                                >
-                                    <Card sx={{ display: "flex", py: 0.5, alignItems: "center" }} square>
-                                        <CardMedia
-                                            component="img"
-                                            image={media?.coverImage?.medium || ""}
-                                            alt="cover"
-                                            sx={{ maxWidth: 60, maxHeight: 80, objectFit: "cover" }}
-                                        />
-                                        <CardContent sx={{ overflowX: "hidden", pr: 0 }}>
-                                            <Title>{media?.title?.romaji}</Title>
-                                            <Info>
-                                                Type: <MediaTypeName type={mediaType}>{mediaType}</MediaTypeName>
-                                            </Info>
-                                            {media?.episodes && <Info>Episodes: {media?.episodes}</Info>}
-                                            {media?.chapters && <Info>Chapters: {media?.chapters}</Info>}
-                                        </CardContent>
-                                    </Card>
-                                </ResultItemWrapper>
+                                    type={media?.type || ("" as MediaType)}
+                                    id={media?.id as number}
+                                    image={media?.coverImage?.medium || ""}
+                                    title={media?.title?.romaji || ("" as string)}
+                                    closeMenu={closeMenu}
+                                    details={details}
+                                />
                             )
                         })}
+                    {vnData &&
+                        vnData.map((vn) => (
+                            <ResultItem
+                                key={vn.id}
+                                type={MediaType.VisualNovel}
+                                id={vn.id}
+                                image={vn.image || ""}
+                                title={vn.title}
+                                closeMenu={closeMenu}
+                                details={[
+                                    { title: "Released", content: vn.released || "" },
+                                    {
+                                        title: "Languages",
+                                        content: vn.languages.map((language) => (
+                                            <ReactCountryFlag key={language} countryCode={language.toUpperCase()} />
+                                        )),
+                                    },
+                                    { title: "Platforms", content: vn.platforms.join(",") },
+                                ]}
+                            />
+                        ))}
                 </Box>
             </PerfectScrollbar>
         )

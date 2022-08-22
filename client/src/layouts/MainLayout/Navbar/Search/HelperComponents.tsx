@@ -64,10 +64,22 @@ export const Info = styled(Typography)(({ theme }) => ({
     fontFamily: "inherit",
 }))
 
+export const DetailsSection = styled(Box)(({ theme }) => ({
+    display: "grid",
+    gridTemplateRows: "1fr 1fr",
+    gridTemplateColumns: "1fr 1fr",
+    gridAutoFlow: "column",
+}))
+
 export const MediaTypeName = styled((props) => <Typography component="span" {...props} />, {
     shouldForwardProp: (props) => props !== "type",
 })<{ type: string } & TypographyProps>(({ theme, type }) => ({
-    color: type.toUpperCase() === MediaType.Anime ? blue[700] : MediaType.Manga ? green[500] : purple[500],
+    color:
+        type.toUpperCase() === MediaType.Anime
+            ? blue[700]
+            : type.toUpperCase() === MediaType.Manga
+            ? green[500]
+            : purple[500],
     display: "inline-block",
     fontSize: theme.typography.pxToRem(13),
     fontWeight: 600,

@@ -14,13 +14,13 @@ export type MediaQueryVariables = Types.Exact<{
 }>;
 
 
-export type MediaQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, type?: Types.MediaType | null, episodes?: number | null, chapters?: number | null, season?: Types.MediaSeason | null, seasonYear?: number | null, status?: Types.MediaStatus | null, genres?: Array<string | null> | null, title?: { __typename?: 'MediaTitle', romaji?: string | null, english?: string | null, native?: string | null, userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null, large?: string | null, medium?: string | null, color?: string | null } | null } | null> | null } | null };
+export type MediaQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', media?: Array<{ __typename?: 'Media', id: number, type?: Types.MediaType | null, episodes?: number | null, chapters?: number | null, season?: Types.MediaSeason | null, seasonYear?: number | null, status?: Types.MediaStatus | null, volumes?: number | null, title?: { __typename?: 'MediaTitle', romaji?: string | null, english?: string | null, native?: string | null, userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null, large?: string | null, medium?: string | null, color?: string | null } | null } | null> | null } | null };
 
 
 export const MediaDocument = `
     query Media($perPage: Int, $search: String, $type: MediaType) {
   Page(perPage: $perPage) {
-    media(isAdult: false, type: $type, search: $search, sort: SEARCH_MATCH) {
+    media(type: $type, search: $search, sort: SEARCH_MATCH) {
       id
       title {
         romaji
@@ -34,7 +34,7 @@ export const MediaDocument = `
       season
       seasonYear
       status
-      genres
+      volumes
       coverImage {
         extraLarge
         large

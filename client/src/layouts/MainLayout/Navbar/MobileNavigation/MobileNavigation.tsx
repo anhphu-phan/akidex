@@ -25,7 +25,6 @@ interface MobileNavigationProps {
 
 const MobileNavigation = ({ sx }: MobileNavigationProps) => {
     const navbarHeight = useAppSelector(selectNavbarHeight)
-    console.log("🚀 ~ file: MobileNavigation.tsx ~ line 27 ~ MobileNavigation ~ navbarHeight", navbarHeight)
     const [open, setOpen] = useState(false)
 
     const toggleMenu = () => {

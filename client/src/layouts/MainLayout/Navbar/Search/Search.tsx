@@ -7,6 +7,10 @@ import { MediaQuery, MediaQueryVariables, useMediaQuery } from "api/hooks/Media"
 import { MediaType } from "types"
 import { getSearchBoxWidth, TextField } from "./HelperComponents"
 import ResultSection from "./ResultSection"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+import axios from "axios"
+import { VisualNovel } from "types/VisualNovels"
+import { VNQueryResponse } from "types/VNDB"
 
 export type FilterType = Record<MediaType, boolean>
 
@@ -20,8 +24,9 @@ const Search = ({ sx }: SearchProps) => {
     const theme = useTheme()
     const [expand, setExpand] = useState(false)
     const [input, setInput] = useState("")
-    const [typeFilter, setTypeFilter] = useState<FilterType>({ ANIME: true, MANGA: true, "VISUAL NOVEL": false })
+    const [typeFilter, setTypeFilter] = useState<FilterType>({ ANIME: true, MANGA: true, "VISUAL NOVEL": true })
     const anchorEl = useRef(document.createElement("div"))
+    const queryClient = useQueryClient()
     // get a ref of result list to check if user click outside or inside later
     const resultEle = useRef<HTMLDivElement | null>(null)
 
@@ -30,8 +35,15 @@ const Search = ({ sx }: SearchProps) => {
     if (typeFilter.MANGA && !typeFilter.ANIME) queryVariable.type = MediaType.Manga
     else if (typeFilter.ANIME && !typeFilter.MANGA) queryVariable.type = MediaType.Anime
 
-    const { data, isLoading, refetch } = useMediaQuery(animeClient, queryVariable, {
+    const {
+        data: animeMangaData,
+        isLoading: isLoadingAnimeManga,
+        refetch: refetchAnimeManga,
+    } = useMediaQuery(animeClient, queryVariable, {
         enabled: false,
+        initialData: () => {
+            return undefined
+        },
         // filter data after fetching
         select: (data) => {
             if (!data || !data.Page || !data.Page.media) return data as MediaQuery
@@ -54,18 +66,41 @@ const Search = ({ sx }: SearchProps) => {
         },
     })
 
-    const handleCheck = (type: MediaType, checked: boolean) => {
-        setTypeFilter({ ...typeFilter, [`${type}`]: checked })
-    }
+    const {
+        isLoading: isLoadingVN,
+        data: vnData,
+        refetch: refetchVN,
+    } = useQuery(
+        ["visual-novel", input, typeFilter["VISUAL NOVEL"]],
+        async () => {
+            const response = await axios.get<VNQueryResponse<VisualNovel>>(
+                `${import.meta.env.VITE_SERVER_BASE_URL}/api/visual-novel/search`,
+                {
+                    params: {
+                        title: input,
+                    },
+                }
+            )
+
+            return response.data
+        },
+        { enabled: false }
+    )
 
     // debouce the fetching
     useDebounce(
         () => {
-            refetch()
+            refetchAnimeManga()
+
+            refetchVN()
         },
         800,
         [input, typeFilter]
     )
+
+    const handleCheck = (type: MediaType, checked: boolean) => {
+        setTypeFilter({ ...typeFilter, [`${type}`]: checked })
+    }
 
     const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInput(event.currentTarget.value)
@@ -74,7 +109,7 @@ const Search = ({ sx }: SearchProps) => {
     const closeMenu = () => {
         setInput("")
         setExpand(false)
-        setTypeFilter({ "VISUAL NOVEL": false, MANGA: true, ANIME: true })
+        setTypeFilter({ "VISUAL NOVEL": true, MANGA: true, ANIME: true })
     }
 
     const scrollbarpadding = 0
@@ -149,7 +184,7 @@ const Search = ({ sx }: SearchProps) => {
                         PaperProps={{
                             sx: {
                                 overflowY: "hidden",
-                                minWidth: anchorEl.current.clientWidth
+                                minWidth: anchorEl.current.clientWidth,
                             },
                         }}
                         open={expand && input !== ""}
@@ -169,8 +204,9 @@ const Search = ({ sx }: SearchProps) => {
                             }}
                         >
                             <ResultSection
-                                isLoading={isLoading}
-                                data={data}
+                                isLoading={isLoadingAnimeManga && isLoadingVN}
+                                animeMangaData={typeFilter.ANIME || typeFilter.MANGA ? animeMangaData : undefined}
+                                vnData={typeFilter["VISUAL NOVEL"] ? vnData?.items : undefined}
                                 filters={typeFilter}
                                 onChecked={handleCheck}
                                 closeMenu={closeMenu}

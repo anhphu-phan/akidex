@@ -5,6 +5,9 @@ import { HomePage } from "views/common"
 import { AnimeHomePage, TopAnime, AnimeSearch, AnimeSearchResult } from "views/anime"
 import { MangaHomePage, TopManga, MangaSearch, MangaSearchResult } from "views/manga"
 import { VisualNovelHomePage, TopVisualNovel, VisualNovelSearch, VisualNovelSearchResult } from "views/visualNovel"
+import SeasonalAnime from "views/anime/SeasonalAnime"
+import AnimeDetail from "views/anime/AnimeDetail"
+import { PageNotFound } from "pages"
 
 const publicRoutes: RouteObject = {
     path: "/",
@@ -38,23 +41,36 @@ const publicRoutes: RouteObject = {
             ],
         },
         {
-            path: "anime",
+            element: <PageNotFound />,
             children: [
                 {
-                    index: true,
-                    element: <AnimeHomePage />,
-                },
-                {
-                    path: "ranking",
-                    element: <TopAnime />,
-                },
-                {
-                    path: "search",
-                    element: <AnimeSearch />,
+                    path: "anime",
                     children: [
+                        // {
+                        //     index: true,
+                        //     element: <AnimeHomePage />,
+                        // },
                         {
-                            path: "result",
-                            element: <AnimeSearchResult />,
+                            path: ":id",
+                            element: <AnimeDetail />,
+                        },
+                        {
+                            path: "ranking",
+                            element: <TopAnime />,
+                        },
+                        {
+                            path: "search",
+                            element: <AnimeSearch />,
+                            children: [
+                                {
+                                    path: "result",
+                                    element: <AnimeSearchResult />,
+                                },
+                            ],
+                        },
+                        {
+                            path: "season",
+                            element: <SeasonalAnime />,
                         },
                     ],
                 },
