@@ -10,14 +10,15 @@ function fetcher<TData, TVariables>(client: GraphQLClient, query: string, variab
 export type AnimesQueryVariables = Types.Exact<{
   perPage?: Types.InputMaybe<Types.Scalars['Int']>;
   search?: Types.InputMaybe<Types.Scalars['String']>;
+  sort?: Types.InputMaybe<Array<Types.InputMaybe<Types.MediaSort>> | Types.InputMaybe<Types.MediaSort>>;
 }>;
 
 
-export type AnimesQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', pageInfo?: { __typename?: 'PageInfo', total?: number | null, perPage?: number | null, currentPage?: number | null, lastPage?: number | null, hasNextPage?: boolean | null } | null, media?: Array<{ __typename?: 'Media', id: number, episodes?: number | null, season?: Types.MediaSeason | null, seasonYear?: number | null, status?: Types.MediaStatus | null, genres?: Array<string | null> | null, type?: Types.MediaType | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null, large?: string | null, medium?: string | null, color?: string | null } | null } | null> | null } | null };
+export type AnimesQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', pageInfo?: { __typename?: 'PageInfo', total?: number | null, perPage?: number | null, currentPage?: number | null, lastPage?: number | null, hasNextPage?: boolean | null } | null, media?: Array<{ __typename?: 'Media', id: number, episodes?: number | null, season?: Types.MediaSeason | null, seasonYear?: number | null, status?: Types.MediaStatus | null, genres?: Array<string | null> | null, type?: Types.MediaType | null, bannerImage?: string | null, title?: { __typename?: 'MediaTitle', romaji?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null, large?: string | null, medium?: string | null, color?: string | null } | null } | null> | null } | null };
 
 
 export const AnimesDocument = `
-    query Animes($perPage: Int, $search: String) {
+    query Animes($perPage: Int, $search: String, $sort: [MediaSort]) {
   Page(perPage: $perPage) {
     pageInfo {
       total
@@ -26,8 +27,11 @@ export const AnimesDocument = `
       lastPage
       hasNextPage
     }
-    media(type: ANIME, sort: POPULARITY, search: $search) {
+    media(type: ANIME, sort: $sort, search: $search) {
       id
+      title {
+        romaji
+      }
       episodes
       season
       seasonYear
@@ -40,6 +44,7 @@ export const AnimesDocument = `
         medium
         color
       }
+      bannerImage
     }
   }
 }

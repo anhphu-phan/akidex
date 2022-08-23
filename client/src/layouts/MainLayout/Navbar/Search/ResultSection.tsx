@@ -1,23 +1,13 @@
-import React, { Fragment, VoidFunctionComponent } from "react"
-import {
-    Card,
-    CardMedia,
-    CardContent,
-    Box,
-    Divider,
-    FormControlLabel,
-    CircularProgress,
-    Typography,
-} from "@mui/material"
-import { ResultItemWrapper, Title, Info, MediaTypeName, MediaTypeCheckbox, DetailsSection } from "./HelperComponents"
-import { Link } from "react-router-dom"
+import React from "react"
+import { Box, Divider, FormControlLabel, CircularProgress, Typography } from "@mui/material"
+import { MediaTypeCheckbox } from "./HelperComponents"
 import { MediaQuery } from "api/hooks/Media"
 import { MediaType } from "types"
 import PerfectScrollbar from "react-perfect-scrollbar"
 import { VisualNovel } from "types/VisualNovels"
 import ResultItem, { Detail } from "./ResultItem"
-import { capitalize } from "utils"
-import ReactCountryFlag from "react-country-flag"
+import locale from "locale-codes"
+import { platforms } from "CONSTANTS"
 
 interface ResultSectionPops {
     isLoading: boolean
@@ -97,10 +87,25 @@ const ResultSection = ({ animeMangaData, vnData, isLoading, filters, onChecked, 
                                     {
                                         title: "Languages",
                                         content: vn.languages.map((language) => (
-                                            <ReactCountryFlag key={language} countryCode={language.toUpperCase()} />
+                                            <abbr
+                                                key={language}
+                                                title={locale.getByTag(language).name}
+                                                className={`icons lang ${language}`}
+                                            />
                                         )),
                                     },
-                                    { title: "Platforms", content: vn.platforms.join(",") },
+                                    {
+                                        title: "Platforms",
+                                        content: vn.platforms.map((platform) => (
+                                            <img
+                                                key={platform}
+                                                src={`${import.meta.env.VITE_VNDB_PLATFORM_ICONS_URL}/${platform}.svg`}
+                                                title={platforms[platform]}
+                                                width={16}
+                                                height={16}
+                                            />
+                                        )),
+                                    },
                                 ]}
                             />
                         ))}

@@ -1,4 +1,4 @@
-query Animes($perPage: Int, $search: String) {
+query Animes($perPage: Int, $search: String, $sort: [MediaSort]) {
     Page(perPage: $perPage) {
         pageInfo {
             total
@@ -7,8 +7,11 @@ query Animes($perPage: Int, $search: String) {
             lastPage
             hasNextPage
         }
-        media(type: ANIME, sort: POPULARITY, search: $search) {
+        media(type: ANIME, sort: $sort, search: $search) {
             id
+            title {
+                romaji
+            }
             episodes
             season
             seasonYear
@@ -21,6 +24,7 @@ query Animes($perPage: Int, $search: String) {
                 medium
                 color
             }
+            bannerImage
         }
     }
 }
