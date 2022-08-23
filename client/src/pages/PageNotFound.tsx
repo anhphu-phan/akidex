@@ -1,8 +1,9 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
 
 const PageNotFound = () => {
   return (
-    <div>PageNotFound</div>
+    <div><Outlet /></div>
   )
 }
 

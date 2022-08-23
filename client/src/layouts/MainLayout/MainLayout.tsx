@@ -10,17 +10,7 @@ const MainLayout = () => {
         <Box>
             <Navbar />
             <Container maxWidth="xl" disableGutters>
-                <Grid container>
-                    <Grid xs={3} md={2.5}>
-                        <LeftSidebar />
-                    </Grid>
-                    <Grid xs={6} md={7}>
-                        <Outlet />
-                    </Grid>
-                    <Grid xs={3} md={2.5}>
-                        <RightSidebar />
-                    </Grid>
-                </Grid>
+                <Outlet />
             </Container>
         </Box>
     )

@@ -23,13 +23,13 @@ declare module "@mui/material/styles/createPalette" {
 
     interface Palette {
         primaryDark: PaletteColor
-        mediaType: Record<MediaType, Palette['primary']>
-        mediaStatus: Record<MediaStatus, Palette['primary']>
+        mediaType: Record<MediaType, Palette["primary"]>
+        mediaStatus: Record<MediaStatus, Palette["primary"]>
     }
 
     interface PaletteOptions {
-        mediaType?: Record<MediaType, PaletteOptions['primary']>
-        mediaStatus?: Record<MediaStatus, PaletteOptions['primary']>
+        mediaType?: Record<MediaType, PaletteOptions["primary"]>
+        mediaStatus?: Record<MediaStatus, PaletteOptions["primary"]>
     }
 
     interface TypeBackground {
@@ -158,6 +158,7 @@ const navbar = {
 // context on the Advanced Perceptual Contrast Algorithm (APCA) used above here: https://github.com/w3c/wcag/issues/695
 
 const systemFont = [
+    "Roboto",
     "-apple-system",
     "BlinkMacSystemFont",
     '"Segoe UI"',
@@ -311,14 +312,14 @@ export const getBaseTheme = (mode: "light" | "dark") =>
         },
         spacing: 10,
         typography: {
-            fontFamily: ["Raleway", ...systemFont].join(","),
+            fontFamily: [...systemFont].join(","),
             fontFamilyCode: ["Consolas", "Menlo", "Monaco", "Andale Mono", "Ubuntu Mono", "monospace"].join(","),
             fontFamilyTagline: ['"PlusJakartaSans-ExtraBold"', ...systemFont].join(","),
             fontFamilySystem: systemFont.join(","),
             fontWeightSemiBold: 600,
             fontWeightExtraBold: 800,
             h1: {
-                fontFamily: ['"PlusJakartaSans-ExtraBold"', ...systemFont].join(","),
+                fontFamily: [...systemFont].join(","),
                 fontSize: "clamp(2.625rem, 1.2857rem + 3.5714vw, 4rem)",
                 fontWeight: 800,
                 lineHeight: 78 / 70,
@@ -327,26 +328,26 @@ export const getBaseTheme = (mode: "light" | "dark") =>
                 }),
             },
             h2: {
-                fontFamily: ['"PlusJakartaSans-ExtraBold"', ...systemFont].join(","),
+                fontFamily: [...systemFont].join(","),
                 fontSize: "clamp(1.5rem, 0.9643rem + 1.4286vw, 2.25rem)",
                 fontWeight: 800,
                 lineHeight: 44 / 36,
                 color: mode === "dark" ? grey[100] : blueDark[700],
             },
             h3: {
-                fontFamily: ['"PlusJakartaSans-Bold"', ...systemFont].join(","),
+                fontFamily: [...systemFont].join(","),
                 fontSize: defaultTheme.typography.pxToRem(36),
                 lineHeight: 44 / 36,
                 letterSpacing: 0.2,
             },
             h4: {
-                fontFamily: ['"PlusJakartaSans-Bold"', ...systemFont].join(","),
+                fontFamily: [...systemFont].join(","),
                 fontSize: defaultTheme.typography.pxToRem(28),
                 lineHeight: 42 / 28,
                 letterSpacing: 0.2,
             },
             h5: {
-                fontFamily: ['"PlusJakartaSans-Bold"', ...systemFont].join(","),
+                fontFamily: [...systemFont].join(","),
                 fontSize: defaultTheme.typography.pxToRem(24),
                 lineHeight: 36 / 24,
                 letterSpacing: 0.1,
@@ -368,7 +369,7 @@ export const getBaseTheme = (mode: "light" | "dark") =>
                 fontWeight: 500,
             },
             body1: {
-                fontFamily: ["Raleway", ...systemFont].join(","),
+                fontFamily: [...systemFont].join(","),
                 fontSize: defaultTheme.typography.pxToRem(16), // 16px
                 lineHeight: 24 / 16,
                 letterSpacing: 0,
