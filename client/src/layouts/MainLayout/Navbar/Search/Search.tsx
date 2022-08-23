@@ -7,7 +7,7 @@ import { MediaQuery, MediaQueryVariables, useMediaQuery } from "api/hooks/Media"
 import { MediaType } from "types"
 import { getSearchBoxWidth, TextField } from "./HelperComponents"
 import ResultSection from "./ResultSection"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { VisualNovel } from "types/VisualNovels"
 import { VNQueryResponse } from "types/VNDB"
@@ -26,10 +26,8 @@ const Search = ({ sx }: SearchProps) => {
     const [input, setInput] = useState("")
     const [typeFilter, setTypeFilter] = useState<FilterType>({ ANIME: true, MANGA: true, "VISUAL NOVEL": true })
     const anchorEl = useRef(document.createElement("div"))
-    const queryClient = useQueryClient()
     // get a ref of result list to check if user click outside or inside later
     const resultEle = useRef<HTMLDivElement | null>(null)
-
     const queryVariable: MediaQueryVariables = { search: input, perPage: 1000 }
 
     if (typeFilter.MANGA && !typeFilter.ANIME) queryVariable.type = MediaType.Manga
@@ -54,9 +52,9 @@ const Search = ({ sx }: SearchProps) => {
                 filteredData.Page.media = filteredData.Page.media.filter((media) => {
                     if (!media || !media.title) return false
 
-                    const { romaji, english, native, userPreferred } = media.title
+                    const { romaji, userPreferred } = media.title
 
-                    return [romaji, english, native, userPreferred].some((title) =>
+                    return [romaji, userPreferred].some((title) =>
                         title?.toLowerCase().includes(input.toLowerCase())
                     )
                 })
