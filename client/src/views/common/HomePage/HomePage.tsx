@@ -1,10 +1,14 @@
+// UI reference: https://dribbble.com/shots/16259684-Enima-Anime-Stream-Web-App/attachments/8126439?mode=media
+
 import React from "react"
-import { Stack } from "@mui/material"
+import { Box, Stack } from "@mui/material"
 import { MediaQuery, MediaQueryVariables, useMediaQuery } from "api/hooks/Media"
 import { animeClient, mangaClient } from "graphql/graphql-request"
 import { MediaSeason, MediaSort, MediaType } from "types"
-import Collection from "./Collection"
+import { Collection } from "./Collection"
+import { Carousel } from "./Carousel"
 import { capitalize } from "utils"
+import { CarouselMediaInfo } from "./Carousel/CarouselItem"
 
 type Page = Exclude<MediaQuery["Page"], null | undefined>
 type Media = Exclude<Exclude<Page["media"], null | undefined>[0], null>
@@ -66,6 +70,20 @@ function getCurrentAnimeSeason(): { season: MediaSeason; year: number } {
     }
 
     return { season: currentAnimeSeason, year }
+}
+
+function getCarouselData(data: MediaQuery) {
+    if (!data || !data.Page || !data.Page.media) return []
+
+    return data.Page.media.map((media) => ({
+        id: media?.id || 0,
+        title: media?.title?.userPreferred || "",
+        description: media?.description || "",
+        rating: media?.averageScore || 0,
+        genres: media?.genres || [],
+        image: media?.coverImage?.extraLarge || "",
+        type: media?.type || MediaType.Anime,
+    }))
 }
 
 const HomePage = () => {
@@ -133,29 +151,61 @@ const HomePage = () => {
         queryOptions
     )
 
+    // ANCHOR get items for carousel
+    let carouselData: CarouselMediaInfo[] = []
+    const isLoadingCarousel = isLoadingTrendingAnime && isLoadingTrendingAnime
+    if (!isLoadingTrendingAnime && trendingAnimeData && trendingAnimeData.Page && trendingAnimeData.Page.media) {
+        carouselData = [...carouselData, ...getCarouselData(trendingAnimeData)]
+    }
+
+    if (!isLoadingTrendingAnime && trendingMangaData && trendingMangaData.Page && trendingMangaData.Page.media) {
+        carouselData = [...carouselData, ...getCarouselData(trendingMangaData)]
+    }
+
     return (
-        <Stack sx={{ px: 10 }} spacing={5}>
-            <Collection title="Top Anime" type="Top" isLoading={isLoadingTopAnime} data={getAnimeInfo(topAnimeData)} />
-            <Collection
-                title="Trending Anime"
-                type="Trending"
-                isLoading={isLoadingTrendingAnime}
-                data={getAnimeInfo(trendingAnimeData)}
-            />
-            <Collection
-                title={`${capitalize(currentAnimeSeason.season)} ${currentAnimeSeason.year}`}
-                type="Season"
-                isLoading={isLoadingCurrentSeasonAnime}
-                data={getAnimeInfo(currentSeasonAnime)}
-            />
-            <Collection title="Top Manga" type="Top" isLoading={isLoadingTopManga} data={getMangaInfo(topMangaData)} />
-            <Collection
-                title="Trending Manga"
-                type="Top"
-                isLoading={isLoadingTrendingManga}
-                data={getMangaInfo(trendingMangaData)}
-            />
-        </Stack>
+        <Box sx={{ px: 10 }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <Carousel data={carouselData} isLoading={isLoadingCarousel} />
+            </Box>
+            <Stack spacing={5} marginTop={5}>
+                <Collection
+                    title="Top Anime"
+                    type="Top"
+                    isLoading={isLoadingTopAnime}
+                    data={getAnimeInfo(topAnimeData)}
+                />
+                <Collection
+                    title="Trending Anime"
+                    type="Trending"
+                    isLoading={isLoadingTrendingAnime}
+                    data={getAnimeInfo(trendingAnimeData)}
+                />
+                <Collection
+                    title={`${capitalize(currentAnimeSeason.season)} ${currentAnimeSeason.year}`}
+                    type="Season"
+                    isLoading={isLoadingCurrentSeasonAnime}
+                    data={getAnimeInfo(currentSeasonAnime)}
+                />
+                <Collection
+                    title="Top Manga"
+                    type="Top"
+                    isLoading={isLoadingTopManga}
+                    data={getMangaInfo(topMangaData)}
+                />
+                <Collection
+                    title="Trending Manga"
+                    type="Top"
+                    isLoading={isLoadingTrendingManga}
+                    data={getMangaInfo(trendingMangaData)}
+                />
+            </Stack>
+        </Box>
     )
 }
 
