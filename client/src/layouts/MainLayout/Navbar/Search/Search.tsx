@@ -18,7 +18,6 @@ interface SearchProps {
     sx: SxProps<Theme>
 }
 
-// TODO: add visual novel type
 // The search input need to apply debounce mechanism
 const Search = ({ sx }: SearchProps) => {
     const theme = useTheme()

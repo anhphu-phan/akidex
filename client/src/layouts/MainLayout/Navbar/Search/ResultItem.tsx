@@ -1,5 +1,5 @@
 import React from "react"
-import { Card, CardMedia, CardContent } from "@mui/material"
+import { Card, CardMedia, CardContent, Tooltip } from "@mui/material"
 import { Link } from "react-router-dom"
 import { ResultItemWrapper, Title, DetailsSection, Info, MediaTypeName } from "./HelperComponents"
 import { MediaType } from "types"
@@ -26,13 +26,34 @@ const ResultItem = ({ type, id, image, title, details, closeMenu }: ResultItemPr
             to={`${type.toLowerCase().replace(" ", "-")}/${id}`}
             onClick={() => closeMenu()}
         >
-            <Card sx={{ display: "flex", py: 0.5, alignItems: "center", userSelect: 'none' }} square>
-                <CardMedia
-                    component="img"
-                    image={image}
-                    alt="cover"
-                    sx={{ maxWidth: 60, maxHeight: 80, objectFit: "cover" }}
-                />
+            <Card sx={{ display: "flex", py: 0.5, alignItems: "center", userSelect: "none" }} square>
+                <Tooltip
+                    sx={{ maxWidth: "500px" }}
+                    title={
+                        <>
+                            <img src={image} />
+                        </>
+                    }
+                    componentsProps={{
+                        tooltip: {
+                            sx: {
+                                bgcolor: "red",
+                                p: 0,
+                                verticalAlign: "middle",
+                                boxShadow:
+                                    "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
+                            },
+                        },
+                    }}
+                    placement="left"
+                >
+                    <CardMedia
+                        component="img"
+                        image={image}
+                        alt="cover"
+                        sx={{ maxWidth: 60, maxHeight: 80, objectFit: "cover" }}
+                    />
+                </Tooltip>
                 <CardContent sx={{ overflowX: "hidden", pr: 0, width: "100%" }}>
                     <Title>{title}</Title>
                     <DetailsSection>
