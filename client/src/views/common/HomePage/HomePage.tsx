@@ -94,7 +94,7 @@ const HomePage = () => {
     const commonQueryVariable: MediaQueryVariables = { perPage: numberItemPerCollection }
     const commonAnimeQueryVariable: MediaQueryVariables = { type: MediaType.Anime }
     const commonMangaQueryVariable: MediaQueryVariables = { type: MediaType.Manga }
-    const queryOptions = {}
+    const queryOptions = { staleTime: 1000 * 60 * 5, refetchInterval: 1000 * 60 * 5 }
 
     function getAnimeQueryVariables(variables: MediaQueryVariables) {
         return Object.assign({}, commonQueryVariable, commonAnimeQueryVariable, variables)
@@ -161,7 +161,7 @@ const HomePage = () => {
     if (!isLoadingTrendingAnime && trendingMangaData && trendingMangaData.Page && trendingMangaData.Page.media) {
         carouselData = [...carouselData, ...getCarouselData(trendingMangaData)]
     }
-
+    console.log("re-render")
     return (
         <Box sx={{ px: 10 }}>
             <Box

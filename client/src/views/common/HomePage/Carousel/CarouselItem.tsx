@@ -33,9 +33,10 @@ const CarouselItem = ({ info, isLoading }: CarouselItemProps) => {
 
     const descriptionElement = (
         <Typography
+            component="div"
             sx={{
                 display: "-webkit-box",
-                WebkitLineClamp: 10,
+                WebkitLineClamp: 15,
                 [`${theme.breakpoints.down("md")}`]: {
                     WebkitLineClamp: 3,
                 },
@@ -46,9 +47,8 @@ const CarouselItem = ({ info, isLoading }: CarouselItemProps) => {
                 textOverflow: "ellipsis",
                 WebkitBoxOrient: "vertical",
             }}
-        >
-            {info?.description || ""}
-        </Typography>
+            dangerouslySetInnerHTML={{ __html: info?.description || "" }}
+        ></Typography>
     )
 
     const headerElement = (
@@ -86,9 +86,11 @@ const CarouselItem = ({ info, isLoading }: CarouselItemProps) => {
                 >
                     <Box>{descriptionElement}</Box>
 
-                    <Box sx={{ flexShrink: 0 }}>
-                        <Typography component="legend">Rating: </Typography>
-                        <Rating value={((info?.rating || 0) / 100) * 5} precision={0.1} readOnly />
+                    <Box sx={{ flexShrink: 0, display: "flex", flexDirection: "column", gap: 1 }}>
+                        <Box sx={{ display: "flex" }}>
+                            <Typography component="legend">Rating: </Typography>
+                            <Rating value={((info?.rating || 0) / 100) * 5} precision={0.1} readOnly />
+                        </Box>
                         <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap" }}>
                             {info && info.genres.map((genre) => <Chip key={genre} label={genre} size="small" />)}
                         </Box>
@@ -99,8 +101,8 @@ const CarouselItem = ({ info, isLoading }: CarouselItemProps) => {
             <CardMedia
                 component="img"
                 image={info?.image || ""}
-                sx={{ width: "clamp(150px,40vw,500px)", height: "clamp(400px, 40vw, 6000px)", flexGrow: 1 }}
-                loading='lazy'
+                sx={{ width: "clamp(150px,40vw,400px)", height: "clamp(400px, 40vw, 600px)", flexGrow: 0, ml: "auto" }}
+                loading="lazy"
             />
         </Card>
     )
