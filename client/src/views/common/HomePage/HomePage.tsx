@@ -75,7 +75,7 @@ function getCurrentAnimeSeason(): { season: MediaSeason; year: number } {
 function getCarouselData(data: MediaQuery) {
     if (!data || !data.Page || !data.Page.media) return []
 
-    return data.Page.media.map((media) => ({
+    return data.Page.media.slice(0, 4).map((media) => ({
         id: media?.id || 0,
         title: media?.title?.userPreferred || "",
         description: media?.description || "",
