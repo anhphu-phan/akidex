@@ -60,11 +60,13 @@ const ResultItem = ({ type, id, image, title, details, closeMenu }: ResultItemPr
                         <Info>
                             Type: <MediaTypeName type={type}>{capitalize(type)}</MediaTypeName>
                         </Info>
-                        {details.map((detail) => (
-                            <Info key={detail.title + detail.content}>
-                                {detail.title}: {detail.content}
-                            </Info>
-                        ))}
+                        {details.map((detail) => {
+                            return (
+                                <Info key={detail.title + detail.content}>
+                                    {detail.title}: {detail.content}
+                                </Info>
+                            )
+                        })}
                     </DetailsSection>
                 </CardContent>
             </Card>

@@ -38,9 +38,6 @@ const Search = ({ sx }: SearchProps) => {
         refetch: refetchAnimeManga,
     } = useMediaQuery(animeClient, queryVariable, {
         enabled: false,
-        initialData: () => {
-            return undefined
-        },
         // filter data after fetching
         select: (data) => {
             if (!data || !data.Page || !data.Page.media) return data as MediaQuery
@@ -53,9 +50,7 @@ const Search = ({ sx }: SearchProps) => {
 
                     const { romaji, userPreferred } = media.title
 
-                    return [romaji, userPreferred].some((title) =>
-                        title?.toLowerCase().includes(input.toLowerCase())
-                    )
+                    return [romaji, userPreferred].some((title) => title?.toLowerCase().includes(input.toLowerCase()))
                 })
             }
 
@@ -87,9 +82,11 @@ const Search = ({ sx }: SearchProps) => {
     // debouce the fetching
     useDebounce(
         () => {
-            refetchAnimeManga()
+            if (input !== "") {
+                refetchAnimeManga()
 
-            refetchVN()
+                refetchVN()
+            }
         },
         800,
         [input, typeFilter]
@@ -201,7 +198,7 @@ const Search = ({ sx }: SearchProps) => {
                             }}
                         >
                             <ResultSection
-                                isLoading={isLoadingAnimeManga && isLoadingVN}
+                                isLoading={isLoadingAnimeManga || isLoadingVN}
                                 animeMangaData={typeFilter.ANIME || typeFilter.MANGA ? animeMangaData : undefined}
                                 vnData={typeFilter["VISUAL NOVEL"] ? vnData?.items : undefined}
                                 filters={typeFilter}

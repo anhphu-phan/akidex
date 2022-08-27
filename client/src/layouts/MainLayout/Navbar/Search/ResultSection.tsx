@@ -31,7 +31,10 @@ const ResultSection = ({ animeMangaData, vnData, isLoading, filters, onChecked, 
             </Box>
         )
     // if user uncheck all the checkbox => found nothing
-    else if (Object.values(filters).every((checked) => !checked) || animeMangaData?.Page?.media?.length === 0)
+    else if (
+        Object.values(filters).every((checked) => !checked) ||
+        (animeMangaData?.Page?.media?.length === 0 && vnData?.length === 0)
+    )
         content = <Typography>Found nothing.</Typography>
     else {
         content = (
@@ -51,8 +54,12 @@ const ResultSection = ({ animeMangaData, vnData, isLoading, filters, onChecked, 
                             if (media?.type === MediaType.Anime) {
                                 details = [
                                     { title: "Episodes", content: media?.episodes?.toString() || "" },
-                                    { title: "Season", content: `${media?.season} ${media?.seasonYear?.toString()}` } ||
-                                        "",
+                                    {
+                                        title: "Season",
+                                        content: media?.season
+                                            ? `${media?.season} ${media?.seasonYear?.toString()}`
+                                            : "",
+                                    },
                                 ]
                             } else if (media?.type === MediaType.Manga) {
                                 details = [
