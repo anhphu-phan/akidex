@@ -1,9 +1,8 @@
 import React from "react"
-import { SxProps, Theme, ImageListItem, ImageListItemBar, Skeleton } from "@mui/material"
-import { Media, MediaCoverImage } from "types"
+import { SxProps, Theme, ImageListItem, ImageListItemBar, Skeleton, imageListItemBarClasses } from "@mui/material"
+import { Media } from "types"
 import { VisualNovel } from "types/VisualNovels"
 import { Link } from "react-router-dom"
-import { capitalize } from "utils"
 
 const playTime: { [key: number]: string } = {
     1: "Very short (< 2 hours)",
@@ -46,16 +45,21 @@ const MediaCard = ({ info, sx, isLoading }: MediaCardProps) => {
     return (
         <ImageListItem
             {...(!isLoading ? { component: Link } : {})}
-            {...(!isLoading ? { to: `${info?.type?.toLowerCase() || ""}/${info?.id}` } : {})}
+            {...(!isLoading ? { to: `/${info?.type?.toLowerCase() || ""}/${info?.id}` } : {})}
             sx={{
                 ...sx,
                 display: "inline-block",
                 flexShrink: 0,
-                borderRadius: 2,
+                borderRadius: 1,
                 overflow: "hidden",
 
+                [`& .${imageListItemBarClasses.root}`]: {
+                    maxHeight: "20%",
+                },
+
                 "&&& img": {
-                    width: "clamp(150px,18vw,220px)",
+                    aspectRatio: "37/53",
+                    borderRadius: 1,
                 },
             }}
         >

@@ -1,7 +1,7 @@
 // UI reference: https://dribbble.com/shots/16259684-Enima-Anime-Stream-Web-App/attachments/8126439?mode=media
 
 import React from "react"
-import { Box, Stack } from "@mui/material"
+import { Box, Stack , Container} from "@mui/material"
 import { MediaQuery, MediaQueryVariables, useMediaQuery } from "api/hooks/Media"
 import { animeClient, mangaClient } from "graphql/graphql-request"
 import { MediaSeason, MediaSort, MediaType } from "types"
@@ -161,9 +161,9 @@ const HomePage = () => {
     if (!isLoadingTrendingAnime && trendingMangaData && trendingMangaData.Page && trendingMangaData.Page.media) {
         carouselData = [...carouselData, ...getCarouselData(trendingMangaData)]
     }
-    console.log("re-render")
+    
     return (
-        <Box sx={{ px: 10 }}>
+        <Container sx={{ px: 10 }}>
             <Box
                 sx={{
                     display: "flex",
@@ -205,7 +205,7 @@ const HomePage = () => {
                     data={getMangaInfo(trendingMangaData)}
                 />
             </Stack>
-        </Box>
+        </Container>
     )
 }
 

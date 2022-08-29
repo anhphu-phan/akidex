@@ -126,12 +126,15 @@ const Collection = ({ data, isLoading, title, type }: CollectionProps) => {
                     component="div"
                     sx={{
                         display: "flex",
+                        "&&& img": {
+                            height: { xs: 200, md: 300 },
+                        },
                         gap: 1,
                         overflowX: "scroll",
                         scrollbarWidth: "none",
                         scrollSnapType: "x mandatory",
+                        width: "100%",
                         borderRadius: 1,
-
                         "::-webkit-scrollbar": {
                             height: 0,
                         },
