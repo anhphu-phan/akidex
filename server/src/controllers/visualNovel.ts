@@ -17,10 +17,10 @@ export const searchVisualNovel: RequestHandler = async (req, res, next) => {
         filters: `title~"${title}"`,
         options,
     })
+    // console.log("🚀 ~ file: visualNovel.ts ~ line 20 ~ constsearchVisualNovel:RequestHandler= ~ queryString", queryString)
 
     try {
         const response = await vndb.query(queryString)
-        console.log("🚀 ~ file: visualNovel.ts ~ line 23 ~ constsearchVisualNovel:RequestHandler= ~ response", response)
         res.status(200).json(response)
     } catch (error) {
         const message = (error as VNDBQueryError).status
