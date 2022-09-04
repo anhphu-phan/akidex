@@ -1,5 +1,5 @@
 import React from "react"
-import { Skeleton, styled } from "@mui/material"
+import { Skeleton, styled, useMediaQuery, useTheme } from "@mui/material"
 import OriginalSlider, { Settings } from "react-slick"
 import CarouselItem, { CarouselMediaInfo } from "./CarouselItem"
 
@@ -30,6 +30,9 @@ interface CarouselProps {
 }
 
 const Carousel = ({ data, isLoading }: CarouselProps) => {
+    const theme = useTheme()
+    const smallScreen = useMediaQuery(theme.breakpoints.down("sm"))
+
     const sliderSettings: Settings = {
         dots: true,
         infinite: true,
@@ -39,6 +42,7 @@ const Carousel = ({ data, isLoading }: CarouselProps) => {
         autoplay: false,
         autoplaySpeed: 5000,
         lazyLoad: "ondemand",
+        arrows: smallScreen ? false : true,
     }
     return (
         <Slider {...sliderSettings}>

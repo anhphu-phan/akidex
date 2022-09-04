@@ -74,6 +74,10 @@ const CarouselItem = ({ info, isLoading }: CarouselItemProps) => {
         <Card
             sx={{
                 display: "flex",
+                flexDirection: "column",
+                [theme.breakpoints.up("sm")]: {
+                    flexDirection: "row",
+                },
                 width: "100%",
                 height: "100%",
                 mx: "auto",
@@ -101,7 +105,18 @@ const CarouselItem = ({ info, isLoading }: CarouselItemProps) => {
             <CardMedia
                 component="img"
                 image={info?.image || ""}
-                sx={{ width: "clamp(150px,40vw,400px)", height: "clamp(400px, 40vw, 600px)", flexGrow: 0, ml: "auto" }}
+                sx={{
+                    height: 400,
+                    [theme.breakpoints.up("sm")]: {
+                        width: "clamp(150px,40vw,400px)",
+                        height: "clamp(400px, 40vw, 600px)",
+                    },
+                    flexGrow: 0,
+                    ml: "auto",
+                    [theme.breakpoints.down("sm")]: {
+                        order: -1,
+                    },
+                }}
                 loading="lazy"
             />
         </Card>
