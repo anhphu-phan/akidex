@@ -19,7 +19,7 @@ const Navbar = () => {
 
     return (
         <AppBar ref={navbarRef} position="sticky" elevation={0}>
-            <Toolbar>
+            <Toolbar sx={{ px: { xs: 0, sm: 1, md: 2 } }}>
                 <Logo sx={{ display: { xs: "none", md: "flex" } }} />
                 {/* Mobile homburger button */}
                 <MobileNavigation sx={{ flexGrow: 1, flexBasis: 0, display: { xs: "flex", md: "none" } }} />
@@ -29,7 +29,15 @@ const Navbar = () => {
                 />
                 <Navigation sx={{ ml: 2, fontFamily: "Overpass", display: { xs: "none", md: "flex" } }} />
                 <Search sx={{ display: { xs: "none", md: "flex" } }} />
-                <Box sx={{ display: "flex", flexGrow: { xs: 1, md: 0 }, flexBasis: 0, justifyContent: "end" }}>
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexGrow: { xs: 1, md: 0 },
+                        flexBasis: 0,
+                        justifyContent: "end",
+                        scale: { xs: "0.75", sm: "1" },
+                    }}
+                >
                     <ColorModeSwitching sx={{ mr: 2 }} />
                     {/* User Avatar */}
                     <UserSettings />
