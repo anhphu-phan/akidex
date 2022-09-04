@@ -7,9 +7,8 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 function fetcher<TData, TVariables>(client: GraphQLClient, query: string, variables?: TVariables, headers?: RequestInit['headers']) {
   return async (): Promise<TData> => client.request<TData, TVariables>(query, variables, headers);
 }
-export type MediaQueryVariables = Types.Exact<{
+export type MediaSearchQueryVariables = Types.Exact<{
   page?: Types.InputMaybe<Types.Scalars['Int']>;
-  perPage?: Types.InputMaybe<Types.Scalars['Int']>;
   id?: Types.InputMaybe<Types.Scalars['Int']>;
   type?: Types.InputMaybe<Types.MediaType>;
   isAdult?: Types.InputMaybe<Types.Scalars['Boolean']>;
@@ -43,16 +42,13 @@ export type MediaQueryVariables = Types.Exact<{
 }>;
 
 
-export type MediaQuery = { __typename: 'Query', Page?: { __typename: 'Page', pageInfo?: { __typename: 'PageInfo', total?: number | null, perPage?: number | null, currentPage?: number | null, lastPage?: number | null, hasNextPage?: boolean | null } | null, media?: Array<{ __typename: 'Media', id: number, bannerImage?: string | null, season?: Types.MediaSeason | null, seasonYear?: number | null, description?: string | null, type?: Types.MediaType | null, format?: Types.MediaFormat | null, status?: Types.MediaStatus | null, episodes?: number | null, duration?: number | null, chapters?: number | null, volumes?: number | null, genres?: Array<string | null> | null, isAdult?: boolean | null, averageScore?: number | null, meanScore?: number | null, popularity?: number | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null, romaji?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', medium?: string | null, extraLarge?: string | null, large?: string | null, color?: string | null } | null, startDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, endDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, rankings?: Array<{ __typename?: 'MediaRank', id: number, rank: number, type: Types.MediaRankType, year?: number | null, allTime?: boolean | null, context: string } | null> | null, recommendations?: { __typename?: 'RecommendationConnection', edges?: Array<{ __typename?: 'RecommendationEdge', node?: { __typename?: 'Recommendation', id: number, mediaRecommendation?: { __typename?: 'Media', id: number, type?: Types.MediaType | null, chapters?: number | null, episodes?: number | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', large?: string | null } | null } | null } | null } | null> | null } | null, tags?: Array<{ __typename?: 'MediaTag', id: number, name: string, description?: string | null } | null> | null, nextAiringEpisode?: { __typename?: 'AiringSchedule', airingAt: number, timeUntilAiring: number, episode: number } | null, mediaListEntry?: { __typename?: 'MediaList', id: number, status?: Types.MediaListStatus | null } | null, studios?: { __typename?: 'StudioConnection', edges?: Array<{ __typename?: 'StudioEdge', isMain: boolean, node?: { __typename?: 'Studio', id: number, name: string } | null } | null> | null } | null } | null> | null } | null };
+export type MediaSearchQuery = { __typename?: 'Query', Page?: { __typename?: 'Page', pageInfo?: { __typename?: 'PageInfo', total?: number | null, perPage?: number | null, currentPage?: number | null, lastPage?: number | null, hasNextPage?: boolean | null } | null, media?: Array<{ __typename?: 'Media', id: number, bannerImage?: string | null, season?: Types.MediaSeason | null, seasonYear?: number | null, description?: string | null, type?: Types.MediaType | null, format?: Types.MediaFormat | null, status?: Types.MediaStatus | null, episodes?: number | null, duration?: number | null, chapters?: number | null, volumes?: number | null, genres?: Array<string | null> | null, isAdult?: boolean | null, averageScore?: number | null, popularity?: number | null, title?: { __typename?: 'MediaTitle', userPreferred?: string | null } | null, coverImage?: { __typename?: 'MediaCoverImage', extraLarge?: string | null, large?: string | null, color?: string | null } | null, startDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, endDate?: { __typename?: 'FuzzyDate', year?: number | null, month?: number | null, day?: number | null } | null, nextAiringEpisode?: { __typename?: 'AiringSchedule', airingAt: number, timeUntilAiring: number, episode: number } | null, mediaListEntry?: { __typename?: 'MediaList', id: number, status?: Types.MediaListStatus | null } | null, studios?: { __typename?: 'StudioConnection', edges?: Array<{ __typename?: 'StudioEdge', isMain: boolean, node?: { __typename?: 'Studio', id: number, name: string } | null } | null> | null } | null } | null> | null } | null };
 
 
-export const MediaDocument = `
-    query Media($page: Int = 1, $perPage: Int = 20, $id: Int, $type: MediaType, $isAdult: Boolean = false, $search: String, $format: [MediaFormat], $status: MediaStatus, $countryOfOrigin: CountryCode, $source: MediaSource, $season: MediaSeason, $seasonYear: Int, $year: String, $onList: Boolean, $yearLesser: FuzzyDateInt, $yearGreater: FuzzyDateInt, $episodeLesser: Int, $episodeGreater: Int, $durationLesser: Int, $durationGreater: Int, $chapterLesser: Int, $chapterGreater: Int, $volumeLesser: Int, $volumeGreater: Int, $licensedBy: [Int], $isLicensed: Boolean, $genres: [String], $excludedGenres: [String], $tags: [String], $excludedTags: [String], $minimumTagRank: Int, $sort: [MediaSort] = [POPULARITY_DESC, SCORE_DESC]) {
-  __typename
-  Page(page: $page, perPage: $perPage) {
-    __typename
+export const MediaSearchDocument = `
+    query MediaSearch($page: Int = 1, $id: Int, $type: MediaType, $isAdult: Boolean = false, $search: String, $format: [MediaFormat], $status: MediaStatus, $countryOfOrigin: CountryCode, $source: MediaSource, $season: MediaSeason, $seasonYear: Int, $year: String, $onList: Boolean, $yearLesser: FuzzyDateInt, $yearGreater: FuzzyDateInt, $episodeLesser: Int, $episodeGreater: Int, $durationLesser: Int, $durationGreater: Int, $chapterLesser: Int, $chapterGreater: Int, $volumeLesser: Int, $volumeGreater: Int, $licensedBy: [Int], $isLicensed: Boolean, $genres: [String], $excludedGenres: [String], $tags: [String], $excludedTags: [String], $minimumTagRank: Int, $sort: [MediaSort] = [POPULARITY_DESC, SCORE_DESC]) {
+  Page(page: $page, perPage: 20) {
     pageInfo {
-      __typename
       total
       perPage
       currentPage
@@ -91,14 +87,11 @@ export const MediaDocument = `
       sort: $sort
       isAdult: $isAdult
     ) {
-      __typename
       id
       title {
         userPreferred
-        romaji
       }
       coverImage {
-        medium
         extraLarge
         large
         color
@@ -127,40 +120,7 @@ export const MediaDocument = `
       genres
       isAdult
       averageScore
-      meanScore
       popularity
-      rankings {
-        id
-        rank
-        type
-        year
-        allTime
-        context
-      }
-      recommendations {
-        edges {
-          node {
-            id
-            mediaRecommendation {
-              id
-              title {
-                userPreferred
-              }
-              type
-              chapters
-              episodes
-              coverImage {
-                large
-              }
-            }
-          }
-        }
-      }
-      tags {
-        id
-        name
-        description
-      }
       nextAiringEpisode {
         airingAt
         timeUntilAiring
@@ -183,17 +143,17 @@ export const MediaDocument = `
   }
 }
     `;
-export const useMediaQuery = <
-      TData = MediaQuery,
+export const useMediaSearchQuery = <
+      TData = MediaSearchQuery,
       TError = unknown
     >(
       client: GraphQLClient,
-      variables?: MediaQueryVariables,
-      options?: UseQueryOptions<MediaQuery, TError, TData>,
+      variables?: MediaSearchQueryVariables,
+      options?: UseQueryOptions<MediaSearchQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useQuery<MediaQuery, TError, TData>(
-      variables === undefined ? ['Media'] : ['Media', variables],
-      fetcher<MediaQuery, MediaQueryVariables>(client, MediaDocument, variables, headers),
+    useQuery<MediaSearchQuery, TError, TData>(
+      variables === undefined ? ['MediaSearch'] : ['MediaSearch', variables],
+      fetcher<MediaSearchQuery, MediaSearchQueryVariables>(client, MediaSearchDocument, variables, headers),
       options
     );

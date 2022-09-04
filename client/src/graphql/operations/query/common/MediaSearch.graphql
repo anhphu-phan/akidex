@@ -1,6 +1,5 @@
-query Media(
+query MediaSearch(
     $page: Int = 1
-    $perPage: Int = 20
     $id: Int
     $type: MediaType
     $isAdult: Boolean = false
@@ -32,11 +31,8 @@ query Media(
     $minimumTagRank: Int
     $sort: [MediaSort] = [POPULARITY_DESC, SCORE_DESC]
 ) {
-    __typename
-    Page(page: $page, perPage: $perPage) {
-        __typename
+    Page(page: $page, perPage: 20) {
         pageInfo {
-            __typename
             total
             perPage
             currentPage
@@ -75,14 +71,11 @@ query Media(
             sort: $sort
             isAdult: $isAdult
         ) {
-            __typename
             id
             title {
                 userPreferred
-                romaji
             }
             coverImage {
-                medium
                 extraLarge
                 large
                 color
@@ -111,40 +104,7 @@ query Media(
             genres
             isAdult
             averageScore
-            meanScore
             popularity
-            rankings {
-                id
-                rank
-                type
-                year
-                allTime
-                context
-            }
-            recommendations {
-                edges {
-                    node {
-                        id
-                        mediaRecommendation {
-                            id
-                            title {
-                                userPreferred
-                            }
-                            type
-                            chapters
-                            episodes
-                            coverImage {
-                                large
-                            }
-                        }
-                    }
-                }
-            }
-            tags {
-                id
-                name
-                description
-            }
             nextAiringEpisode {
                 airingAt
                 timeUntilAiring

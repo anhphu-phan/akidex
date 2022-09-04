@@ -15,6 +15,7 @@ generates:
           - typescript-react-query
     config:
       fetcher: graphql-request
+      addInfiniteQuery: true
       # exposeQueryKeys: true
       # exposeFetcher: true
   src/graphql/schema/schema.json:

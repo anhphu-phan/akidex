@@ -1,0 +1,5 @@
+export { default as MediaDetail } from "./MediaDetail"
+export { MediaOverview } from "./Overview"
+export { MediaCharacters } from "./Characters"
+export { MediaStaff } from "./Staff"
+export { MediaRelations } from "./Relations"

@@ -33,7 +33,9 @@ declare module "@mui/material/styles/createPalette" {
     }
 
     interface TypeBackground {
-        hover: React.CSSProperties
+        hover: string
+        light: string
+        dark: string
     }
 }
 
@@ -238,11 +240,15 @@ export const getBaseTheme = (mode: "light" | "dark") =>
             background: {
                 default: "#edf1f5",
                 hover: primary[50],
+                light: "#ffffff",
+                dark: "#bbbec2",
                 // paper: "#d3dde3",
                 ...(mode === "dark" && {
                     default: blueDark[800],
                     paper: blueDark[900],
                     hover: blueDark[700],
+                    light: "#304567",
+                    dark: "#000017",
                 }),
             },
             common: {
@@ -367,6 +373,11 @@ export const getBaseTheme = (mode: "light" | "dark") =>
                 lineHeight: 24 / 18,
                 letterSpacing: 0,
                 fontWeight: 500,
+                color: grey[700]
+            },
+            subtitle2: {
+                color: grey[600],
+                
             },
             body1: {
                 fontFamily: [...systemFont].join(","),
@@ -378,6 +389,7 @@ export const getBaseTheme = (mode: "light" | "dark") =>
                 fontSize: defaultTheme.typography.pxToRem(14), // 14px
                 lineHeight: 21 / 14,
                 letterSpacing: 0,
+                color: grey[500],
             },
             caption: {
                 display: "inline-block",

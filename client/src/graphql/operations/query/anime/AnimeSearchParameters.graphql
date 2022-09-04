@@ -1,0 +1,14 @@
+query AnimeSearchParameters {
+    genres: GenreCollection
+    tags: MediaTagCollection {
+        name
+        description
+        category
+        isAdult
+    }
+    Media(startDate_greater: 18000000, sort: START_DATE) {
+        startDate {
+            year
+        }
+    }
+}
