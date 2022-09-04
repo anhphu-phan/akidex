@@ -1,13 +1,13 @@
 // UI reference: https://dribbble.com/shots/16259684-Enima-Anime-Stream-Web-App/attachments/8126439?mode=media
 
 import React from "react"
-import { Box, Stack , Container} from "@mui/material"
+import { Box, Stack, Container } from "@mui/material"
 import { MediaQuery, MediaQueryVariables, useMediaQuery } from "api/hooks/Media"
 import { animeClient, mangaClient } from "graphql/graphql-request"
 import { MediaSeason, MediaSort, MediaType } from "types"
 import { Collection } from "./Collection"
 import { Carousel } from "./Carousel"
-import { capitalize } from "utils"
+import { capitalize, getCurrentAnimeSeason } from "utils"
 import { CarouselMediaInfo } from "./Carousel/CarouselItem"
 
 type Page = Exclude<MediaQuery["Page"], null | undefined>
@@ -38,38 +38,6 @@ function getMangaInfo(data: MediaQuery | undefined) {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         ({ ...getCommonMediaInfo(media!), chapters: media?.chapters || undefined })
     )
-}
-
-function getCurrentSeasonName(): MediaSeason {
-    // current season !== current anime season
-    // current anime season = current season - 1 season
-    const date = new Date()
-    const currentMonth = date.getUTCMonth()
-
-    if (currentMonth <= 2) return MediaSeason.Spring
-    if (currentMonth <= 5) return MediaSeason.Summer
-    if (currentMonth <= 8) return MediaSeason.Fall
-
-    return MediaSeason.Winter
-}
-
-function getCurrentAnimeSeason(): { season: MediaSeason; year: number } {
-    const currentSeason = getCurrentSeasonName()
-    let currentAnimeSeason: MediaSeason
-    let year: number = new Date().getUTCFullYear()
-
-    if (currentSeason === MediaSeason.Spring) {
-        currentAnimeSeason = MediaSeason.Winter
-        year = new Date().getUTCFullYear() - 1
-    } else if (currentSeason === MediaSeason.Summer) {
-        currentAnimeSeason = MediaSeason.Spring
-    } else if (currentSeason === MediaSeason.Fall) {
-        currentAnimeSeason = MediaSeason.Summer
-    } else {
-        currentAnimeSeason = MediaSeason.Fall
-    }
-
-    return { season: currentAnimeSeason, year }
 }
 
 function getCarouselData(data: MediaQuery) {
@@ -161,7 +129,7 @@ const HomePage = () => {
     if (!isLoadingTrendingAnime && trendingMangaData && trendingMangaData.Page && trendingMangaData.Page.media) {
         carouselData = [...carouselData, ...getCarouselData(trendingMangaData)]
     }
-    
+
     return (
         <Container sx={{ px: 10 }}>
             <Box

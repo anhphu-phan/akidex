@@ -27,9 +27,10 @@ interface MediaCardProps {
     info?: MediaCardInfo
     sx?: SxProps<Theme>
     isLoading: boolean
+    anchorRef?: (node?: Element | null | undefined) => void
 }
 
-const MediaCard = ({ info, sx, isLoading }: MediaCardProps) => {
+const MediaCard = ({ info, sx, isLoading, anchorRef }: MediaCardProps) => {
     const subtitle = (
         <>
             {!info?.episodes || isNaN(info?.episodes)
@@ -68,7 +69,7 @@ const MediaCard = ({ info, sx, isLoading }: MediaCardProps) => {
                     <img src={info?.image || ""} loading="lazy" />
                 </Skeleton>
             ) : (
-                <img src={info?.image || ""} loading="lazy" />
+                <img src={info?.image || ""} loading="lazy" ref={anchorRef} />
             )}
             {!isLoading && <ImageListItemBar title={info?.title || ""} subtitle={subtitle} />}
         </ImageListItem>

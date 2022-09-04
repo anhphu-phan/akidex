@@ -6,6 +6,8 @@ import MediaCard, { MediaCardInfo } from "./MediaCard"
 import styled from "@emotion/styled"
 import { blue } from "@mui/material/colors"
 import { Link } from "react-router-dom"
+import { MediaSort } from "types"
+import { getCurrentAnimeSeason } from "utils"
 
 const ScrollButton = styled(
     ({ icon, ...props }: { icon: React.ReactNode; props?: IconButtonProps }) => (
@@ -81,9 +83,23 @@ const Collection = ({ data, isLoading, title, type }: CollectionProps) => {
         }
     }
 
-    let moreLink
-    if (data && data[0] && data[0].type) moreLink = data[0].type.toLowerCase() + "/" + type.toLowerCase()
-    else moreLink = "#"
+    const searchParams = new URLSearchParams()
+    switch (type.toLowerCase()) {
+        case "top":
+            searchParams.set("sort", MediaSort["ScoreDesc"])
+            break
+        case "trending":
+            searchParams.set("sort", MediaSort["TrendingDesc"])
+            break
+        case "season": {
+            const { season, year } = getCurrentAnimeSeason()
+            searchParams.set("season", season)
+            searchParams.set("year", year.toString())
+            break
+        }
+        default:
+    }
+    const moreLink = "anime/search" + "?" + searchParams.toString()
 
     return (
         <Box>
