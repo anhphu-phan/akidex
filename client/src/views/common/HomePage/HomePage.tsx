@@ -131,7 +131,7 @@ const HomePage = () => {
     }
 
     return (
-        <Container sx={{ px: 10 }}>
+        <Container sx={{ px: { xs: 0, sm: 5, md: 10 } }}>
             <Box
                 sx={{
                     display: "flex",
@@ -141,7 +141,7 @@ const HomePage = () => {
             >
                 <Carousel data={carouselData} isLoading={isLoadingCarousel} />
             </Box>
-            <Stack spacing={5} marginTop={5}>
+            <Stack spacing={5} marginTop={5} sx={{ px: { xs: 1 } }}>
                 <Collection
                     title="Top Anime"
                     type="Top"
