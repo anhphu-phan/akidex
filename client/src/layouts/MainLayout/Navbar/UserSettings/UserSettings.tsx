@@ -11,7 +11,6 @@ import {
     Theme,
     styled,
     menuClasses,
-    MenuProps,
 } from "@mui/material"
 import { settings } from "CONSTANTS"
 
