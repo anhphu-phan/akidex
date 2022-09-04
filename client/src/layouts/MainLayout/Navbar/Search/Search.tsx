@@ -201,7 +201,7 @@ const Search = ({ sx }: SearchProps) => {
                             }}
                         >
                             <ResultSection
-                                isLoading={isLoadingAnimeManga || isLoadingVN}
+                                isLoading={isLoadingAnimeManga && isLoadingVN}
                                 animeMangaData={typeFilter.ANIME || typeFilter.MANGA ? animeMangaData : undefined}
                                 vnData={typeFilter["VISUAL NOVEL"] ? vnData?.items : undefined}
                                 filters={typeFilter}
