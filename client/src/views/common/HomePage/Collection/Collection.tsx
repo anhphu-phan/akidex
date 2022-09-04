@@ -19,7 +19,11 @@ const ScrollButton = styled(
         side: string
         hide: boolean
     } & IconButtonProps
->(({ side, hide }) => ({
+>(({ theme, side, hide }) => ({
+    // @ts-ignore
+    [theme.breakpoints.down("sm")]: {
+        display: "none",
+    },
     position: "absolute",
     ...(side === "left" && {
         left: -40,
