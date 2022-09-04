@@ -14,7 +14,7 @@ import { visualNovelRouter } from 'routes'
 
 // ======================== CONTANTS ============================
 const PORT = process.env.PORT || 8000
-const HOSTNAME = process.env.HOSTNAME || 'locahost'
+const HOSTNAME = process.env.HOSTNAME as string
 
 // ======================== config ============================
 const app = express()
@@ -46,6 +46,6 @@ nodeCleanup(function (exitCode, signal) {
 })
 
 // ======================== server listening ==========================
-app.listen(PORT, HOSTNAME, () => {
+app.listen(PORT, () => {
     console.log(`[server]: Server is running at http://${HOSTNAME}:${PORT}`)
 })
