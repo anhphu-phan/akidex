@@ -373,11 +373,10 @@ export const getBaseTheme = (mode: "light" | "dark") =>
                 lineHeight: 24 / 18,
                 letterSpacing: 0,
                 fontWeight: 500,
-                color: grey[700]
+                color: grey[700],
             },
             subtitle2: {
                 color: grey[600],
-                
             },
             body1: {
                 fontFamily: [...systemFont].join(","),
@@ -402,6 +401,9 @@ export const getBaseTheme = (mode: "light" | "dark") =>
                 fontFamily: ["One Piece", ...systemFont].join(","),
                 fontWeight: 900,
                 fontSize: "3.3125rem",
+                [defaultTheme.breakpoints.down("sm")]: {
+                    fontSize: "2rem",
+                },
                 lineHeight: "1.15em",
                 color: "#1D1D1D",
             },
