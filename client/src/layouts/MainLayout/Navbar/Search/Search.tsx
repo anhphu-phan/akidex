@@ -118,6 +118,9 @@ const Search = ({ sx }: SearchProps) => {
                     bgcolor: "primary.main",
                     px: 10,
                 },
+                [theme.breakpoints.down("sm")]: {
+                    px: 2,
+                },
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "end",
