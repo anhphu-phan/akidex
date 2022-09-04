@@ -3,7 +3,7 @@ import { Box, styled, Typography } from "@mui/material"
 export const Wrapper = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.background.light,
     width: "100vw",
-    maxWidth: '100%'
+    maxWidth: "100%",
 }))
 
 export const BannerImage = styled("img")(({ theme }) => ({
@@ -18,17 +18,20 @@ export const BannerImage = styled("img")(({ theme }) => ({
 }))
 
 export const Header = styled(Box)(({ theme }) => ({
+    display: "grid",
+    gridTemplateColumns: "auto 1fr",
+    gap: theme.spacing(2),
+    color: "rgb(122, 133, 143)",
+    padding: theme.spacing(2),
+    [theme.breakpoints.down("sm")]: {
+        display: "block",
+    },
     [theme.breakpoints.down("md")]: {
         minHeight: 200,
     },
     [theme.breakpoints.up("md")]: {
         minHeight: 300,
     },
-    display: "grid",
-    gridTemplateColumns: "auto 1fr",
-    gap: theme.spacing(2),
-    color: "rgb(122, 133, 143)",
-    padding: theme.spacing(2),
 }))
 
 export const TitleWrapper = styled(Box)(({ theme }) => ({
@@ -45,8 +48,14 @@ export const Description = styled(Typography)(({ theme }) => ({
 export const CoverImage = styled("img")(({ theme }) => ({
     position: "relative",
     height: "100%",
-    alignSelf: 'center',
-    [theme.breakpoints.down("md")]: {
+    alignSelf: "center",
+    display: "block",
+    marginInline: "auto",
+    [theme.breakpoints.down("sm")]: {
+        width: "60%",
+        marginBottom: theme.spacing(2),
+    },
+    [theme.breakpoints.up("sm")]: {
         height: 200,
     },
     [theme.breakpoints.up("md")]: {
