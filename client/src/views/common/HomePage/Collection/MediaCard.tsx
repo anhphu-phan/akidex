@@ -27,10 +27,11 @@ interface MediaCardProps {
     info?: MediaCardInfo
     sx?: SxProps<Theme>
     isLoading: boolean
+    smoothScrolling?: boolean
     anchorRef?: (node?: Element | null | undefined) => void
 }
 
-const MediaCard = ({ info, sx, isLoading, anchorRef }: MediaCardProps) => {
+const MediaCard = ({ info, sx, isLoading, smoothScrolling, anchorRef }: MediaCardProps) => {
     const subtitle = (
         <>
             {!info?.episodes || isNaN(info?.episodes)
@@ -45,7 +46,9 @@ const MediaCard = ({ info, sx, isLoading, anchorRef }: MediaCardProps) => {
 
     return (
         <ImageListItem
-            {...(!isLoading ? { component: Link } : {})}
+            {...(!isLoading
+                ? { component: Link, ...(smoothScrolling && { state: { smoothScrolling: smoothScrolling } }) }
+                : {})}
             {...(!isLoading ? { to: `/${info?.type?.toLowerCase() || ""}/${info?.id}` } : {})}
             sx={{
                 ...sx,

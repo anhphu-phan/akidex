@@ -1,5 +1,9 @@
-import React, { Fragment, useLayoutEffect } from "react"
-import { useLocation } from "react-router-dom"
+import React, { Fragment, useEffect } from "react"
+import { Location, useLocation } from "react-router-dom"
+
+interface State {
+    smoothScrolling: boolean
+}
 
 interface ScrollToTopProps {
     children: React.ReactNode
@@ -7,13 +11,14 @@ interface ScrollToTopProps {
 
 const ScrollToTop = ({ children }: ScrollToTopProps) => {
     const location = useLocation()
+    const state = location.state as State
     const { pathname } = location
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         window.scrollTo({
             top: 0,
             left: 0,
-            behavior: "smooth",
+            behavior: state?.smoothScrolling ? "smooth" : "auto",
         })
     }, [pathname])
 

@@ -35,6 +35,7 @@ const Recommendations = ({ recommendations }: RecommendationProps) => {
                             <MediaCard
                                 key={recommendation?.node?.id}
                                 isLoading={false}
+                                smoothScrolling
                                 info={{
                                     id: media.id,
                                     title: media.title?.userPreferred || "",
