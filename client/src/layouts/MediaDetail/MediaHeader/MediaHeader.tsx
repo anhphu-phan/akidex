@@ -1,30 +1,67 @@
 import React from "react"
-import { Box, Typography, useTheme } from "@mui/material"
+import { Box, Typography, Skeleton } from "@mui/material"
 import { Media } from "types/MediaCustom"
-import { BannerImage, CoverImage, Wrapper, Header, TitleWrapper, Description } from "./helperComponent"
+import { BannerImageWrapper, CoverImageWrapper, Wrapper, Header, TitleWrapper, Description } from "./helperComponent"
 import AddButton from "./AddButton"
 import NavTabs from "./NavTabs"
 
 interface MediaHeaderProps {
+    isLoading: boolean
     title: Media["title"]
     coverImg: string
     bannerImg: string
     description: string
 }
 
-const MediaHeader = ({ coverImg, bannerImg, description, title }: MediaHeaderProps) => {
+const MediaHeader = ({ isLoading, coverImg, bannerImg, description, title }: MediaHeaderProps) => {
     return (
         <Wrapper>
-            {bannerImg && <BannerImage src={bannerImg} alt="Banner Image" />}
+            <BannerImageWrapper>
+                {isLoading ? (
+                    <Skeleton variant="rectangular" width="100%" height="100%" />
+                ) : (
+                    bannerImg && (
+                        <Box
+                            component="img"
+                            src={bannerImg}
+                            alt="Banner Image"
+                            sx={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        />
+                    )
+                )}
+            </BannerImageWrapper>
             <Header>
-                <CoverImage src={coverImg} alt="Cover Image" />
+                <CoverImageWrapper>
+                    {isLoading ? (
+                        <Skeleton variant="rectangular" width="100%" height="100%" />
+                    ) : (
+                        <Box
+                            component="img"
+                            src={coverImg}
+                            alt="Cover Image"
+                            sx={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        />
+                    )}
+                </CoverImageWrapper>
                 <Box>
                     <TitleWrapper>
-                        {title?.userPreferred && <Typography variant="h5">{title.userPreferred}</Typography>}
+                        {isLoading ? (
+                            <Skeleton width="20%">
+                                {title?.userPreferred && <Typography variant="h5">{title.userPreferred}</Typography>}
+                            </Skeleton>
+                        ) : (
+                            title?.userPreferred && <Typography variant="h5">{title.userPreferred}</Typography>
+                        )}
                         {!title?.userPreferred && title?.romaji && <Typography variant="h5">{title.romaji}</Typography>}
                         <AddButton />
                     </TitleWrapper>
-                    <Description dangerouslySetInnerHTML={{ __html: description }} />
+                    {isLoading ? (
+                        Array.from({ length: 10 }).map((_, index) => (
+                            <Skeleton key={index} variant="text" width="100%" height="1rem" />
+                        ))
+                    ) : (
+                        <Description dangerouslySetInnerHTML={{ __html: description }} />
+                    )}
                 </Box>
             </Header>
             <NavTabs />

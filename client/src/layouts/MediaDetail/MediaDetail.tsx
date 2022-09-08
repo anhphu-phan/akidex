@@ -13,11 +13,13 @@ const MediaDetail = ({ isLoading, media }: MediaDetailProps) => {
     return (
         <Box>
             <MediaHeader
+                isLoading={isLoading}
                 coverImg={media?.coverImage?.extraLarge || ""}
                 bannerImg={media?.bannerImage || ""}
                 title={media?.title}
                 description={media?.description || ""}
             />
+
             <Container maxWidth="lg">
                 <Outlet />
             </Container>
