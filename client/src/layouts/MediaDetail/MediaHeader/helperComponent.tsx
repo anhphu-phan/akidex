@@ -1,4 +1,3 @@
-import React from "react"
 import { Box, styled, Typography } from "@mui/material"
 
 export const Wrapper = styled(Box)(({ theme }) => ({
@@ -7,13 +6,13 @@ export const Wrapper = styled(Box)(({ theme }) => ({
     maxWidth: "100%",
 }))
 
-export const BannerImageWrapper = styled(Box)(({ theme }) => ({
+export const BannerImageWrapper = styled(Box)(({ theme, children }) => ({
     width: "100%",
     [theme.breakpoints.down("md")]: {
-        height: 200,
+        height: children ? 200 : 0,
     },
     [theme.breakpoints.up("md")]: {
-        height: 350,
+        height: children ? 350 : 0,
     },
 }))
 

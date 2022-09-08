@@ -14,21 +14,20 @@ interface MediaHeaderProps {
 }
 
 const MediaHeader = ({ isLoading, coverImg, bannerImg, description, title }: MediaHeaderProps) => {
+    console.log("🚀 ~ file: MediaHeader.tsx ~ line 17 ~ MediaHeader ~ bannerImg", bannerImg)
     return (
         <Wrapper>
             <BannerImageWrapper>
                 {isLoading ? (
                     <Skeleton variant="rectangular" width="100%" height="100%" />
-                ) : (
-                    bannerImg && (
-                        <Box
-                            component="img"
-                            src={bannerImg}
-                            alt="Banner Image"
-                            sx={{ width: "100%", height: "100%", objectFit: "cover" }}
-                        />
-                    )
-                )}
+                ) : bannerImg && bannerImg !== "" ? (
+                    <Box
+                        component="img"
+                        src={bannerImg}
+                        alt="Banner Image"
+                        sx={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                ) : null}
             </BannerImageWrapper>
             <Header>
                 <CoverImageWrapper>
