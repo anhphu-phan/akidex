@@ -1,6 +1,6 @@
 import React from "react"
 import { Tabs, styled, Tab as MuiTab, TabProps as MuiTabProps } from "@mui/material"
-import { NavLink, LinkProps } from "react-router-dom"
+import { NavLink, LinkProps, useLocation } from "react-router-dom"
 
 const Tab = styled((props: MuiTabProps & LinkProps) => {
     return <MuiTab LinkComponent={NavLink} {...props} />
@@ -8,8 +8,26 @@ const Tab = styled((props: MuiTabProps & LinkProps) => {
     fontWeight: "normal",
 }))
 
+const tabIndexes: { [key: string]: number } = {
+    overview: 0,
+    characters: 1,
+    staff: 2,
+    relations: 3,
+}
+
 const NavTabs = () => {
-    const [value, setValue] = React.useState(0)
+    const { pathname } = useLocation()
+
+    const regex = /\/(?:anime|manga)\/\d+\/(\w+)/
+    const found = pathname.match(regex)
+    let tabIndex: number
+    if (found && found.length) {
+        tabIndex = tabIndexes[found[1]]
+    } else {
+        tabIndex = 0
+    }
+
+    const [value, setValue] = React.useState(tabIndex)
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue)
