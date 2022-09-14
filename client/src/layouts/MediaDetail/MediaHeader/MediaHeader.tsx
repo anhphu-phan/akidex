@@ -14,7 +14,6 @@ interface MediaHeaderProps {
 }
 
 const MediaHeader = ({ isLoading, coverImg, bannerImg, description, title }: MediaHeaderProps) => {
-    console.log("🚀 ~ file: MediaHeader.tsx ~ line 17 ~ MediaHeader ~ bannerImg", bannerImg)
     return (
         <Wrapper>
             <BannerImageWrapper>
@@ -68,4 +67,4 @@ const MediaHeader = ({ isLoading, coverImg, bannerImg, description, title }: Med
     )
 }
 
-export default MediaHeader
+export default React.memo(MediaHeader)

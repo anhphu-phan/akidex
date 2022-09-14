@@ -1,6 +1,6 @@
 import React from "react"
 import { useParams } from "react-router-dom"
-import {  useMediaQuery } from "api/hooks/Media"
+import { useMediaQuery } from "api/hooks/Media"
 import { animeClient } from "graphql/graphql-request"
 import { MediaDetail } from "layouts/MediaDetail"
 import { Media } from "types/MediaCustom"

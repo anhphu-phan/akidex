@@ -6,7 +6,6 @@ import { Routes } from "routes"
 import { useAppSelector } from "store/hooks"
 import { selectColorScheme } from "store/slices/customizationSlice"
 import { getBaseTheme, getThemedComponents } from "themes"
-import ScrollToTop from "components/ScrollToTop"
 
 function App() {
     const colorScheme = useAppSelector(selectColorScheme)
@@ -25,9 +24,7 @@ function App() {
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <ScrollToTop>
-                    <Routes />
-                </ScrollToTop>
+                <Routes />
             </ThemeProvider>
         </StyledEngineProvider>
     )
