@@ -131,7 +131,7 @@ const HomePage = () => {
     }
 
     return (
-        <Container sx={{ px: { xs: 0, sm: 5, md: 10 } }}>
+        <Container sx={{ px: { xs: 0, sm: 1, md: 2 } }}>
             <Box
                 sx={{
                     display: "flex",
