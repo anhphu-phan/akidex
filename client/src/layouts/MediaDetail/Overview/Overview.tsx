@@ -26,10 +26,6 @@ const Overview = () => {
         }
     )
 
-    if (!isLoading) {
-        console.log(media)
-    }
-
     const generalInfos: GeneralInfos = {
         format: media?.format,
         episodes: media?.episodes,

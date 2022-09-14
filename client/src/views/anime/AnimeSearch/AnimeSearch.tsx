@@ -174,8 +174,6 @@ const AnimeSearch = () => {
         setParameters({ ...parameters, sort: newSortType })
     }
 
-    console.log(searchResult)
-
     return (
         <Container maxWidth="xl">
             <Form>

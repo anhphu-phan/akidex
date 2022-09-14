@@ -8,10 +8,8 @@ const TopAnime = () => {
     if (isLoading) return <div>Loading...</div>
 
     if (isError) {
-        console.log("🚀 ~ file: TopAnime.tsx ~ line 7 ~ TopAnime ~ error", error)
         return <div>{(error as Error).message}</div>
     }
-    console.log(data)
     return (
         <div>
             {data.Page?.media?.map((anime) => (
