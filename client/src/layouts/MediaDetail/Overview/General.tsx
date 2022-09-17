@@ -44,7 +44,7 @@ const General = ({ infos }: GeneralProps) => {
                         {capitalize(infos.season)} {infos.seasonYear}
                     </Info>
                 )}
-                {infos?.status && <Info title="Status">{capitalize(infos.status)}</Info>}
+                {infos?.status && <Info title="Status">{capitalize(infos.status.replaceAll("_", " "))}</Info>}
                 {infos?.startDate && infos.startDate.year && (
                     <Info title="Start Date">
                         {format(
