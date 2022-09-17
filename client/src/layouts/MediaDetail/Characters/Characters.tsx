@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react"
 import { useInfiniteMediaCharactersQuery } from "api/hooks/MediaCharacters"
 import { mediaClient } from "graphql/graphql-request"
-import { useParams } from "react-router-dom"
-import { Staff } from "types"
+import { useLocation, useParams } from "react-router-dom"
+import { MediaType, Staff } from "types"
 import { Box } from "@mui/material"
 import LanguageFilter from "./LanguageFilter"
 import { Card } from "./Card"
@@ -10,8 +10,13 @@ import { useInView } from "react-intersection-observer"
 
 const Characters = () => {
     const { ref, inView } = useInView({ rootMargin: `${window.innerHeight / 3}px` })
+    const { pathname } = useLocation()
+    const mediaType = pathname.split("/")[1]
     const { id } = useParams() as { id: string }
-    const [language, setLanguage] = useState<Staff["languageV2"]>("Japanese")
+    const [language, setLanguage] = useState<Staff["languageV2"]>(
+        mediaType === MediaType.Anime.toLowerCase() ? "Japanese" : undefined
+    )
+
     const { isLoading, isFetchingNextPage, data, fetchNextPage } = useInfiniteMediaCharactersQuery(
         "page",
         mediaClient,
@@ -80,37 +85,61 @@ const Characters = () => {
                         {page.Media &&
                             page.Media.characters &&
                             page.Media.characters.edges &&
-                            page.Media?.characters?.edges.map((edge, edgeIndex) => (
-                                <Fragment key={edge?.id}>
-                                    {edge &&
-                                        edge.voiceActorRoles &&
-                                        edge.voiceActorRoles
-                                            .filter(
-                                                (va) =>
-                                                    va?.voiceActor?.language?.toLowerCase() === language?.toLowerCase()
-                                            )
-                                            .map((va) => (
-                                                <Card
-                                                    key={va?.voiceActor?.id}
-                                                    characterId={edge.node?.id}
-                                                    characterName={edge.node?.name?.userPreferred || undefined}
-                                                    characterRole={edge.role || undefined}
-                                                    characterImage={edge.node?.image?.large || undefined}
-                                                    voiceActorId={va?.voiceActor?.id}
-                                                    voiceActorName={va?.voiceActor?.name?.userPreferred || undefined}
-                                                    voiceActorLanguage={va?.voiceActor?.language || undefined}
-                                                    voiceActorImage={va?.voiceActor?.image?.large || undefined}
-                                                    {...(page.Media &&
-                                                        page.Media.characters &&
-                                                        page.Media.characters.edges &&
-                                                        pageIndex === data.pages.length - 1 &&
-                                                        edgeIndex === page.Media?.characters?.edges.length - 1 && {
-                                                            anchorRef: ref,
-                                                        })}
-                                                />
-                                            ))}
-                                </Fragment>
-                            ))}
+                            page.Media?.characters?.edges.map((edge, edgeIndex) => {
+                                if (language === undefined) {
+                                    return (
+                                        <Card
+                                            key={edge?.node?.id}
+                                            characterId={edge?.node?.id}
+                                            characterName={edge?.node?.name?.userPreferred || undefined}
+                                            characterRole={edge?.role || undefined}
+                                            characterImage={edge?.node?.image?.large || undefined}
+                                            {...(page.Media &&
+                                                page.Media.characters &&
+                                                page.Media.characters.edges &&
+                                                pageIndex === data.pages.length - 1 &&
+                                                edgeIndex === page.Media?.characters?.edges.length - 1 && {
+                                                    anchorRef: ref,
+                                                })}
+                                        />
+                                    )
+                                }
+
+                                return (
+                                    <Fragment key={edge?.id}>
+                                        {edge &&
+                                            edge.voiceActorRoles &&
+                                            edge.voiceActorRoles
+                                                .filter(
+                                                    (va) =>
+                                                        va?.voiceActor?.language?.toLowerCase() ===
+                                                        language?.toLowerCase()
+                                                )
+                                                .map((va) => (
+                                                    <Card
+                                                        key={va?.voiceActor?.id}
+                                                        characterId={edge.node?.id}
+                                                        characterName={edge.node?.name?.userPreferred || undefined}
+                                                        characterRole={edge.role || undefined}
+                                                        characterImage={edge.node?.image?.large || undefined}
+                                                        voiceActorId={va?.voiceActor?.id}
+                                                        voiceActorName={
+                                                            va?.voiceActor?.name?.userPreferred || undefined
+                                                        }
+                                                        voiceActorLanguage={va?.voiceActor?.language || undefined}
+                                                        voiceActorImage={va?.voiceActor?.image?.large || undefined}
+                                                        {...(page.Media &&
+                                                            page.Media.characters &&
+                                                            page.Media.characters.edges &&
+                                                            pageIndex === data.pages.length - 1 &&
+                                                            edgeIndex === page.Media?.characters?.edges.length - 1 && {
+                                                                anchorRef: ref,
+                                                            })}
+                                                    />
+                                                ))}
+                                    </Fragment>
+                                )
+                            })}
                     </Fragment>
                 ))}
             </Box>
