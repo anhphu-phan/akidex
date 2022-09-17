@@ -69,16 +69,14 @@ const Characters = () => {
                 <LanguageFilter languages={languages} current={language} onChange={handleChange} />
             )}
             <Box
-                sx={(theme) => ({
+                sx={{
                     display: "grid",
                     gap: 2,
                     justifyContent: "center",
-                    gridTemplateColumns: "1fr",
-                    [theme.breakpoints.up("md")]: {
-                        gridTemplateColumns: "1fr 1fr",
-                    },
+                    gridTemplateColumns:
+                        language === undefined ? "repeat(auto-fill, 250px)" : "repeat(auto-fill, 500px)",
                     mt: 2,
-                })}
+                }}
             >
                 {data?.pages.map((page, pageIndex) => (
                     <Fragment key={page.Media?.characters?.pageInfo?.currentPage}>
