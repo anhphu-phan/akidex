@@ -39,7 +39,7 @@ const Carousel = ({ data, isLoading }: CarouselProps) => {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        autoplay: false,
+        autoplay: true,
         autoplaySpeed: 5000,
         lazyLoad: "ondemand",
         arrows: smallScreen ? false : true,
