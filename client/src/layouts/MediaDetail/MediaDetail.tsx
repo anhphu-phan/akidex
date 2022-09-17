@@ -22,7 +22,7 @@ const MediaDetail = ({ isLoading, media }: MediaDetailProps) => {
                     description={media?.description || ""}
                 />
 
-                <Container maxWidth="lg" sx={{ py: 2 }}>
+                <Container maxWidth="lg" sx={{ py: 2, px: { md: 0 } }}>
                     <Outlet />
                 </Container>
             </Box>
