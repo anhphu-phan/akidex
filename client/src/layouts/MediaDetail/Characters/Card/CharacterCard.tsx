@@ -17,8 +17,7 @@ const CharacterCard = ({ characterId, characterName, characterRole, characterIma
                 height: "100%",
                 width: "100%",
                 display: "flex",
-                borderTopRightRadius: 0,
-                borderBottomRightRadius: 0,
+                borderRadius: 0,
                 borderRight: 0,
                 boxShadow: "unset",
             }}

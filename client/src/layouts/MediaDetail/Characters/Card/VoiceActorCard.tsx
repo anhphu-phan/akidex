@@ -23,8 +23,7 @@ const VoiceActorCard = ({
                 height: "100%",
                 width: "100%",
                 display: "flex",
-                borderTopLeftRadius: 0,
-                borderBottomLeftRadius: 0,
+                borderRadius: 0,
                 borderLeft: 0,
                 boxShadow: "unset",
             }}
