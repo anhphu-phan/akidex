@@ -17,6 +17,7 @@ const VoiceActorCard = ({
     voiceActorRoleNote,
     voiceActorImage,
 }: VoiceActorCardProps) => {
+    console.log("🚀 ~ file: VoiceActorCard.tsx ~ line 20 ~ voiceActorRoleNote", voiceActorRoleNote)
     return (
         <Card
             sx={{
@@ -38,7 +39,7 @@ const VoiceActorCard = ({
                                 variant="subtitle2"
                                 sx={{ display: "block", fontSize: "0.75rem" }}
                             >
-                                (abc)
+                                ({voiceActorRoleNote})
                             </Typography>
                         </>
                     ) : (

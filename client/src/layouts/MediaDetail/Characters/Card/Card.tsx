@@ -28,18 +28,6 @@ const Card = ({
     voiceActorImage,
     anchorRef,
 }: CardProps) => {
-    console.log(
-        "🚀 ~ file: Card.tsx ~ line 31 ~",
-        characterId,
-        characterName,
-        characterRole,
-        characterImage,
-        voiceActorId,
-        voiceActorName,
-        voiceActorLanguage,
-        voiceActorRoleNote,
-        voiceActorImage
-    )
     return (
         <Box
             sx={{

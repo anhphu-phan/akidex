@@ -125,6 +125,7 @@ const Characters = () => {
                                                             va?.voiceActor?.name?.userPreferred || undefined
                                                         }
                                                         voiceActorLanguage={va?.voiceActor?.language || undefined}
+                                                        voiceActorRoleNote={va?.roleNotes || undefined}
                                                         voiceActorImage={va?.voiceActor?.image?.large || undefined}
                                                         {...(page.Media &&
                                                             page.Media.characters &&
