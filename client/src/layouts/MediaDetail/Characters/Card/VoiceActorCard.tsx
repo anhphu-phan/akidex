@@ -17,7 +17,6 @@ const VoiceActorCard = ({
     voiceActorRoleNote,
     voiceActorImage,
 }: VoiceActorCardProps) => {
-    console.log("🚀 ~ file: VoiceActorCard.tsx ~ line 20 ~ voiceActorRoleNote", voiceActorRoleNote)
     return (
         <Card
             sx={{

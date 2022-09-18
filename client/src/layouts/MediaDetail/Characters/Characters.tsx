@@ -31,7 +31,7 @@ const Characters = () => {
                     return { page: lastPage.Media.characters.pageInfo.currentPage + 1 }
                 }
 
-                return { page: undefined }
+                return undefined
             },
         }
     )
